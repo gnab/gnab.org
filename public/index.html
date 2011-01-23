@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="styles/default.less" rel="stylesheet/less" type="text/css" />
+    <script src="scripts/less-1.0.41.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="scripts/sammy-0.6.2.min.js"></script>
+    <script type="text/javascript" src="scripts/gnab.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var app = $.sammy(function () {
+          this.get('', function () {
+            this.redirect('#/feed');
+          });
+          this.get('#/feed', function () {
+            gnab.gotoTab('feed');
+          });
+          this.get('#/projects', function () {
+            //gnab.gotoTab('projects');
+          });
+          this.get('#/links', function () {
+            //gnab.gotoTab('links');
+          });
+        });
+
+        app.run();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="panel">
+      <div class="header">
+        <div class="content">
+          GNAB.ORG
+        </div>
+        <div style="clear: both"></div>
+        <ul>
+          <li><a id="feedTab" href="#/feed">FEED</a></li>
+          <li><a id="projectsTab" href="#/projects">PROJECTS</a></li>
+          <li><a id="linksTab" href="#/links">LINKS</a></li>
+        </ul>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+    <div id="content">
+      <div id="feed">
+        The feed contains stuff I've discovered lately, like blog posts
+        and other interesting links, as well as my tweets.
+        <div class="content"></div>
+      </div>
+      <div id="projects" class="hidden">
+        These are my Github projects.
+        <div class="content"></div>
+      </div>
+      <div id="links" class="hidden">
+        These are my Google bookmarks.
+        <div class="content"></div>
+      </div>
+    </div>
+  </body>
+</html>

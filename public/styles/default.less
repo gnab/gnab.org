@@ -1,0 +1,106 @@
+@background: #fff;
+@fontfamily: Georgia;
+@headerbackground: #636057;
+
+@tabfontfamily: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
+@tabfontsize: 1.5em;
+@tablink: #939087;
+@tabhover: #434037;
+
+.centered {
+  margin: 0 auto;
+  width: 600px;  
+}
+
+.hidden {
+  display: none;
+}
+
+html, body {
+  background: @background;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: @fontfamily;
+  font-size: 100%;
+}
+#panel {
+  .header {
+    background: @headerbackground;
+    .content {
+      height: 6em;
+      .centered;
+    }
+  } 
+  ul {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    .centered;
+  }
+  li {
+    float: left;
+    position: relative;
+    a {
+      border: 1px solid transparent;
+      color: @tablink;
+      display: block;
+      font-family: @tabfontfamily;
+      font-size: @tabfontsize;
+      padding: 3px 1em 2px 1em;
+      line-height: 2em;
+      text-decoration: none;
+    }
+    a:hover {
+      background: @tabhover;
+    }
+    a.active {
+      background: @background;
+      color: #000;
+    }
+  }
+}
+#content {
+  background: @background;
+  padding-top: 1em;
+  .centered;
+  .content {
+    margin-top: 1em;
+    .entry {
+      border-top: 1px solid #eee;
+      padding: 0.5em;
+      a {
+        color: #BB4A23;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      a.user {
+        font-weight: bold; 
+      }
+      .forwarded {
+        background: url(../images/forwarded.png);
+        float: left;
+        height: 14px;
+        margin-top: 3px;
+        margin-right: 4px;
+        width: 18px;
+      }
+      .meta {
+        color: #999;
+        font-family: 'Lucida Grande', sans-serif;
+        font-size: 0.8em;
+        margin-top: 0.5em;
+        a {
+          color: #999;
+        }
+      }
+    }
+    .entry:hover {
+      background: #f7f7f7;
+    }
+  }
+}
