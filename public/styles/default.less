@@ -1,9 +1,6 @@
 @background: #fff;
-@fontfamily: Georgia;
-@headerbackground: #636057;
+@header: #636057;
 
-@tabfontfamily: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
-@tabfontsize: 1.5em;
 @tablink: #939087;
 @tabhover: #434037;
 
@@ -23,12 +20,12 @@ html, body {
   padding: 0;
 }
 body {
-  font-family: @fontfamily;
+  font-family: Georgia, Helvetica, Arial, serif;
   font-size: 100%;
 }
 #panel {
   .header {
-    background: @headerbackground;
+    background: @header;
     .content {
       height: 6em;
       .centered;
@@ -47,8 +44,8 @@ body {
       border: 1px solid transparent;
       color: @tablink;
       display: block;
-      font-family: @tabfontfamily;
-      font-size: @tabfontsize;
+      font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
+      font-size: 1.5em;
       padding: 3px 1em 2px 1em;
       line-height: 2em;
       text-decoration: none;
@@ -63,7 +60,6 @@ body {
   }
 }
 #content {
-  background: @background;
   padding-top: 1em;
   .centered;
   .content {
