@@ -1,0 +1,95 @@
+html, body {
+  background: #ffffff;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Georgia, Helvetica, Arial, serif;
+  font-size: 100%;
+}
+#panel .header {
+  background: #636057;
+}
+#panel .header .content {
+  height: 6em;
+  margin: 0 auto;
+  width: 600px;
+}
+#panel ul {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  margin: 0 auto;
+  width: 600px;
+}
+#panel li {
+  float: left;
+  position: relative;
+}
+#panel li a {
+  border: 1px solid transparent;
+  color: #939087;
+  display: block;
+  font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
+  font-size: 1.5em;
+  padding: 3px 1em 2px 1em;
+  line-height: 2em;
+  text-decoration: none;
+}
+#panel li a:hover {
+  background: #434037;
+}
+#panel li a.active {
+  background: #ffffff;
+  color: #000;
+}
+#content {
+  padding-top: 1em;
+  margin: 0 auto;
+  width: 600px;
+}
+#content .content {
+  margin-top: 1em;
+}
+#content .content .entry {
+  border-top: 1px solid #eee;
+  padding: 0.5em;
+}
+#content .content .entry a {
+  color: #BB4A23;
+  text-decoration: none;
+}
+#content .content .entry a:hover {
+  text-decoration: underline;
+}
+#content .content .entry a.user {
+  font-weight: bold;
+}
+#content .content .entry .forwarded {
+  background: url(../images/forwarded.png);
+  float: left;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 4px;
+  width: 18px;
+}
+#content .content .entry .meta {
+  color: #999;
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+#content .content .entry .meta a {
+  color: #999;
+}
+#content .content .entry:hover {
+  background: #f7f7f7;
+}
+#content #loader {
+  background: url(../images/loader.gif) no-repeat 50%;
+  height: 4em;
+}
+.hidden {
+  display: none;
+}

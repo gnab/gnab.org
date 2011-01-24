@@ -20,6 +20,7 @@ var gnab = (function () {
   Tab.prototype.load = function () {
     var content = $('#' + this.id + ' .content');
 
+    $('#loader').show();
     this.loaded = true;
 
     $.getJSON('/' + this.id + '.js', function(entries) {
@@ -51,6 +52,7 @@ var gnab = (function () {
 
         entryTag.appendTo(content);
       });
+      $('#loader').hide();
     });
   }
 
