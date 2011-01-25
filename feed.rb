@@ -20,7 +20,7 @@ module Feed
   def self.get_text(entry)
     text = entry['text']
 
-    text.gsub!(/(http:\/\/[^\s]+)/, '<a href="\1">\1</a>')
+    text.gsub!(/(https?:\/\/[^\s]+)/, '<a href="\1">\1</a>')
     text.gsub!(/@([a-z][a-z0-9_]*)/i, '@<a href="http://twitter.com/\1">\1</a>')
     text.gsub!(/(#[a-z][a-z0-9_]*)/i) do |match|
       '<a href="http://twitter.com/search?q=' +
