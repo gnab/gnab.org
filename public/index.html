@@ -19,7 +19,7 @@
       </div>
     </div>
     <div id="content">
-      <div id="feed">
+      <div id="feed" class="hidden">
         The feed contains stuff I've discovered lately, like blog posts
         and other interesting links, as well as my tweets.
         <div class="content"></div>
@@ -47,7 +47,7 @@
             gnab.gotoTab('feed');
           });
           this.get('#/projects', function () {
-            //gnab.gotoTab('projects');
+            gnab.gotoTab('projects');
           });
           this.get('#/links', function () {
             //gnab.gotoTab('links');
