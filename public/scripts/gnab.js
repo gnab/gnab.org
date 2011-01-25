@@ -28,9 +28,10 @@ var gnab = (function () {
       content.empty();
 
       $(entries).each(function(i, entry) {
-        entryTag = self.createEntryTag(entry);
-        entryTag.appendTo(content);
+        var entryTag = self.createEntryTag(entry);
+        content.append(entryTag);
       });
+
       $('#loader').hide();
     });
   }
@@ -40,37 +41,50 @@ var gnab = (function () {
 
     if (entry.forwarded) {
       var forwardedTag = $('<span class="forwarded" />');
-      forwardedTag.appendTo(entryTag);
       var userTag = $('<a class="user" href="http://twitter.com/' + 
         entry.user + '"/>').text(entry.user);
-      userTag.appendTo(entryTag);
+
+      entryTag
+        .append(forwardedTag)
+        .append(userTag);
     }
 
     var textTag = $('<span class="text" />').html(' ' + entry.text);
-    textTag.appendTo(entryTag);
-
-    var metaTag = $('<div class="meta" />');
-    metaTag.html('&nbsp;via&nbsp;');
 
     var timeTag = $('<a href="http://twitter.com/' + entry.user + 
       '/status/' + entry.id + '" />').text(entry.created_at);
-    timeTag.prependTo(metaTag);
 
     var sourceTag = $('<span />').html(entry.source);
-    sourceTag.appendTo(metaTag);
 
-    metaTag.appendTo(entryTag);
+    var metaTag = $('<div class="meta" />')
+      .html('&nbsp;via&nbsp;')
+      .prepend(timeTag)
+      .append(sourceTag);
 
-    return entryTag;
+    return entryTag
+      .append(textTag)
+      .append(metaTag);
   }
 
   function createProjectEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
 
-    var textTag = $('<span class="text" />').html(' ' + entry.description);
-    textTag.appendTo(entryTag);
+    var languageTag = $('<span class="meta bold right" />')
+      .text(entry.language);
 
-    return entryTag;
+    var nameTag = $('<a class="title" href="' + 
+      entry.url + '"/>').text(entry.name)
+
+    var textTag = $('<div class="text" />').html(' ' + entry.description);
+
+    var metaTag = $('<div class="meta" />')
+      .text('Last updated ' + entry.updated_at);
+
+    return entryTag
+      .append(languageTag)
+      .append(nameTag)
+      .append(textTag)
+      .append(metaTag);
   }
 
   var currentTab, tabs = {
