@@ -69,8 +69,14 @@ var gnab = (function () {
   function createProjectEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
 
-    var languageTag = $('<span class="meta bold right" />')
+    var languageTag = $('<span class="meta right" />')
       .text(entry.language);
+
+    var watchersTag = $('<span class="meta watchers right" />')
+      .text(entry.watchers);
+
+    var forksTag = $('<span class="meta forks right" />')
+      .text(entry.watchers);
 
     var nameTag = $('<a class="title" href="' + 
       entry.url + '"/>').text(entry.name)
@@ -81,6 +87,8 @@ var gnab = (function () {
       .text('Last updated ' + entry.updated_at);
 
     return entryTag
+      .append(forksTag)
+      .append(watchersTag)
       .append(languageTag)
       .append(nameTag)
       .append(textTag)

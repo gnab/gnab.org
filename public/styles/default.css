@@ -59,12 +59,6 @@ body {
 #content .content .text {
   margin-bottom: 0.5em;
 }
-#content .content .right {
-  float: right;
-}
-#content .content .bold {
-  font-weight: bold;
-}
 #content .content .entry a {
   color: #BB4A23;
   text-decoration: none;
@@ -87,6 +81,19 @@ body {
   margin-top: 3px;
   margin-right: 4px;
   width: 18px;
+}
+#content .content .right {
+  float: right;
+}
+#content .content .watchers {
+  background: url(../images/watchers.png) no-repeat 0 -3px;
+  padding-left: 16px;
+  margin-left: 1em;
+}
+#content .content .forks {
+  background: url(../images/forks.png) no-repeat 0 -3px;
+  padding-left: 16px;
+  margin-left: 1em;
 }
 #content .content .entry .meta {
   color: #999;
