@@ -5,14 +5,17 @@ html, body {
   padding: 0;
 }
 body {
-  font-family: Georgia, Helvetica, Arial, serif;
+  font-family: Baskerville, Georgia, Times, serif;
   font-size: 100%;
 }
 #panel .header {
-  background: #636057;
+  background: url(../images/header.jpg) center center;
 }
 #panel .header .content {
-  height: 6em;
+  color: #636057;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+  height: 10em;
   margin: 0 auto;
   width: 600px;
 }
@@ -28,29 +31,40 @@ body {
   position: relative;
 }
 #panel li a {
+  background: #000;
   border: 1px solid transparent;
-  color: #939087;
+  color: #636057;
   display: block;
   font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
-  font-size: 1.5em;
+  font-size: 2em;
   padding: 3px 1em 2px 1em;
   line-height: 2em;
+  margin-right: 0.25em;
   text-decoration: none;
+  filter:alpha(opacity=60);
+  -moz-opacity:0.60;
+  opacity: 0.60;
 }
 #panel li a:hover {
-  background: #434037;
+  color: #5b584f;
+  filter:alpha(opacity=80);
+  -moz-opacity:0.80;
+  opacity: 0.80;
 }
 #panel li a.active {
   background: #ffffff;
   color: #000;
+  filter:alpha(opacity=100);
+  -moz-opacity:1;
+  opacity: 1;
 }
 #content {
-  padding-top: 1em;
+  padding-top: 1.5em;
   margin: 0 auto;
   width: 600px;
 }
 #content .content {
-  margin-top: 1em;
+  margin-top: 1.5em;
 }
 #content .content .entry {
   border-top: 1px solid #eee;
@@ -69,10 +83,11 @@ body {
 #content .content .entry a.user {
   font-weight: bold;
 }
-#content .content .entry a.title {
-  display: block;
+#content .content .entry .title {
+  padding-bottom: 0.5em;
+}
+#content .content .entry .title a {
   font-weight: bold;
-  margin-bottom: 0.5em;
 }
 #content .content .entry .forwarded {
   background: url(../images/forwarded.png);
@@ -86,18 +101,18 @@ body {
   float: right;
 }
 #content .content .watchers {
-  background: url(../images/watchers.png) no-repeat 0 -3px;
-  padding-left: 16px;
+  background: url(../images/watchers.png) no-repeat 0 -5px;
+  padding-left: 18px;
   margin-left: 1em;
 }
 #content .content .forks {
-  background: url(../images/forks.png) no-repeat 0 -3px;
-  padding-left: 16px;
+  background: url(../images/forks.png) no-repeat 0 -5px;
+  padding-left: 18px;
   margin-left: 1em;
 }
 #content .content .entry .meta {
   color: #999;
-  font-family: 'Lucida Grande', sans-serif;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
 #content .content .entry .meta a {

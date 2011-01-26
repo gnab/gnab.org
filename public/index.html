@@ -12,7 +12,7 @@
         <div style="clear: both"></div>
         <ul>
           <li><a id="feedTab" href="#/feed">FEED</a></li>
-          <li><a id="projectsTab" href="#/projects">PROJECTS</a></li>
+          <li><a id="codeTab" class="trans" href="#/code">CODE</a></li>
           <li><a id="linksTab" href="#/links">LINKS</a></li>
         </ul>
         <div style="clear: both"></div>
@@ -24,7 +24,7 @@
         and other interesting links, as well as my tweets.
         <div class="content"></div>
       </div>
-      <div id="projects" class="hidden">
+      <div id="code" class="hidden">
         The list contains all of my code repositories, including the
         repository for this website.
         <div class="content"></div>
@@ -47,8 +47,8 @@
           this.get('#/feed', function () {
             gnab.gotoTab('feed');
           });
-          this.get('#/projects', function () {
-            gnab.gotoTab('projects');
+          this.get('#/code', function () {
+            gnab.gotoTab('code');
           });
           this.get('#/links', function () {
             //gnab.gotoTab('links');

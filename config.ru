@@ -1,19 +1,19 @@
 require 'sinatra'
 require './feed'
-require './projects'
+require './code'
 
 mime_type :less, 'text/css'
 
 get '/' do
-  redirect '/index.html'
+  File.new('public/index.html').readlines
 end
 
 get '/feed.js' do
   Feed.retrieve
 end
 
-get '/projects.js' do
-  Projects.retrieve
+get '/code.js' do
+  Code.retrieve
 end
 
 run Sinatra::Application

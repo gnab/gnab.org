@@ -21,7 +21,9 @@ var gnab = (function () {
   Tab.prototype.load = function () {
     var self = this, content = $('#' + this.id + ' .content');
 
+    content.hide();
     $('#loader').show();
+
     this.loaded = true;
 
     $.getJSON('/' + this.id + '.js', function(entries) {
@@ -33,23 +35,24 @@ var gnab = (function () {
       });
 
       $('#loader').hide();
+      content.fadeIn();
     });
   }
 
   function createFeedEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
 
+    var textTag = $('<div class="text" />').html(' ' + entry.text);
+
     if (entry.forwarded) {
       var forwardedTag = $('<span class="forwarded" />');
       var userTag = $('<a class="user" href="http://twitter.com/' + 
         entry.user + '"/>').text(entry.user);
 
-      entryTag
-        .append(forwardedTag)
-        .append(userTag);
+      textTag
+        .prepend(userTag)
+        .prepend(forwardedTag);
     }
-
-    var textTag = $('<span class="text" />').html(' ' + entry.text);
 
     var timeTag = $('<a href="http://twitter.com/' + entry.user + 
       '/status/' + entry.id + '" />').text(entry.created_at);
@@ -66,7 +69,7 @@ var gnab = (function () {
       .append(metaTag);
   }
 
-  function createProjectEntryTag(entry) {
+  function createCodeEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
 
     var languageTag = $('<span class="meta right" />')
@@ -76,10 +79,10 @@ var gnab = (function () {
       .text(entry.watchers);
 
     var forksTag = $('<span class="meta forks right" />')
-      .text(entry.watchers);
+      .text(entry.forks);
 
-    var nameTag = $('<a class="title" href="' + 
-      entry.url + '"/>').text(entry.name)
+    var nameTag = $('<div class="title" />')
+      .append($('<a href="' + entry.url + '"/>').text(entry.name))
 
     var textTag = $('<div class="text" />').html(' ' + entry.description);
 
@@ -97,7 +100,7 @@ var gnab = (function () {
 
   var currentTab, tabs = {
     feed: new Tab('feed', createFeedEntryTag), 
-    projects: new Tab('projects', createProjectEntryTag), 
+    code: new Tab('code', createCodeEntryTag), 
     links: new Tab('links')
   }
   

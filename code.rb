@@ -3,7 +3,7 @@ require 'uri'
 require 'net/http'
 require './feed'
 
-module Projects
+module Code
   URL = 'http://github.com/api/v2/json/repos/search/username:gnab'
 
   def self.get_updated_at(entry)
