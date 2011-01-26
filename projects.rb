@@ -15,7 +15,7 @@ module Projects
     data = Net::HTTP.get_response(URI.parse(URL)).body
     entries = JSON.parse(data)['repositories']
 
-    projects = entries.sort_by {|e| e[:pushed_at]}.reverse.collect do |entry|
+    projects = entries.sort_by {|e| e['pushed_at']}.reverse.collect do |entry|
       {
         :name => entry['name'],
         :description => entry['description'],
