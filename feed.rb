@@ -1,24 +1,15 @@
 require 'json'
 require 'twitter'
+require 'net/http'
+require 'net/https'
+require 'rss'
+require './common'
 
 module Feed
-  def self.format_datetime(datetime)
-    datetime.strftime("%k:%M %b %e") + case datetime.day % 10
-      when 1
-        'st'
-      when 2
-        'nd'
-      when 3
-        'rd'
-      else
-        'th'
-    end
-  end
-
   def self.get_created_at(entry)
     datetime = DateTime.parse(entry['created_at']) + 
       entry['user']['utc_offset'].to_f / 3600 / 24
-    format_datetime(datetime)
+    Common.format_datetime(datetime)
   end
 
   def self.get_text(entry)
@@ -32,6 +23,14 @@ module Feed
     end
 
     text
+  end
+
+  def self.retrieve_activities
+    http = Net::HTTP.new('github.com', 443)
+    http.use_ssl = true
+    resp, data = http.get('/gnab.atom')
+    rss = RSS::Parser.parse(data, false)
+    rss.methods
   end
 
   def self.retrieve

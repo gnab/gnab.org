@@ -1,14 +1,14 @@
 require 'json'
 require 'uri'
 require 'net/http'
-require './feed'
+require './common'
 
 module Code
   URL = 'http://github.com/api/v2/json/repos/search/username:gnab'
 
   def self.get_updated_at(entry)
     datetime = DateTime.parse(entry['pushed_at']).to_time
-    Feed.format_datetime(datetime)
+    Common.format_datetime(datetime)
   end
 
   def self.retrieve
