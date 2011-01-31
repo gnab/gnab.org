@@ -40,7 +40,9 @@ var gnab = (function () {
   }
 
   function formatDatetime(datetime) {
-    return Date(datetime);
+    var date = new Date(datetime);
+
+    return date.strftime('%H:%M %b %e');
   }
 
   function createFeedEntryTag(entry) {
