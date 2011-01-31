@@ -6,13 +6,7 @@ require 'rss'
 require './common'
 
 module Feed
-  def self.get_created_at(entry)
-    datetime = DateTime.parse(entry['created_at']) + 
-      entry['user']['utc_offset'].to_f / 3600 / 24
-    Common.format_datetime(datetime)
-  end
-
-  def self.get_text(entry)
+  def self.format_tweet_text(entry)
     text = entry['text']
 
     text.gsub!(/(https?:\/\/[^\s]+)/, '<a href="\1">\1</a>')
@@ -30,25 +24,44 @@ module Feed
     http.use_ssl = true
     resp, data = http.get('/gnab.atom')
     rss = RSS::Parser.parse(data, false)
-    rss.methods
+    rss.entries.collect do |entry|
+      {
+        :title => entry.title.content,
+        :created_at => entry.published.content,
+        :source => entry.link.href,
+        :text => entry.content.content,
+        :kind => 'github'
+      }
+    end
   end
 
-  def self.retrieve
+  def self.retrieve_tweets
     timeline = Twitter.user_timeline('gnab', :include_rts => true)
 
-    feed = timeline.collect do |entry|
+    timeline.collect do |entry|
       forwarded = entry.has_key?('retweeted_status')
       entry = entry['retweeted_status'] if forwarded
-
+      created_at = DateTime.parse(entry['created_at']) + 
+          entry['user']['utc_offset'].to_f / 3600 / 24
       {
         :forwarded => forwarded,
         :source => entry['source'],
-        :text => get_text(entry),
-        :created_at => get_created_at(entry),
+        :text => format_tweet_text(entry),
+        :created_at => created_at.to_time,
         :user => entry['user']['screen_name'],
-        :id => entry['id_str']
+        :id => entry['id_str'],
+        :kind => 'twitter'
       }
     end
+  end
+
+  def self.retrieve
+    activities = retrieve_activities
+    tweets = retrieve_tweets
+
+    feed = activities + tweets
+
+    feed.sort_by!{ |e| e[:created_at] }.reverse!
 
     JSON(feed)
   end

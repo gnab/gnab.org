@@ -11,34 +11,40 @@ body {
   font-family: Baskerville, Georgia, Times, serif;
   font-size: 100%;
 }
-#panel .header {
-  background: url(../images/header.jpg) center center;
-}
-#panel .header .content {
-  color: #636057;
-  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
-  font-size: 0.8em;
-  height: 10em;
-  line-height: 2em;
+.center {
   margin: 0 auto;
   width: 600px;
 }
-#panel .header .content #spacer{
-  height: 1em;
+#header {
+  background: url(../images/header.jpg) top center;
+  height: 199px;
+  position: relative;
 }
-#panel .header .content #title{
-  color: #BB4A23; 
-  font-size: 1.25em;
+#header .content {
+  padding-top: 1em;
+}
+#header .contact {
+  color: #939087;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  line-height: 1.75em;
+}
+#header .contact #title{
+  color: #bb4a23; 
+  font-size: 1.5em;
   font-weight: bold;
-  margin-bottom: 0.5em;
-  margin-top: 0.5em;
+  margin-bottom: 0.75em;
 }
-#panel .header .content a {
+#header .contact a {
   border-bottom: 1px dotted #737067;
-  color: #737067;
+  color: #b3b0a7;
   text-decoration: none;
 }
-#panel .header .content a.icon {
+#header .contact a:hover {
+  color: #e3e0d7; 
+  border-bottom: 1px dotted #e3e0d7;
+}
+#header .contact a.icon {
   border: none;
   display: block;
   height: 32px;
@@ -48,30 +54,34 @@ body {
   -moz-opacity:0.60;
   opacity: 0.60;
 }
-#panel .header .content a.icon:hover {
+#header .contact a.icon:hover {
   filter:alpha(opacity=100);
   -moz-opacity:1;
   opacity: 1;
 }
-#panel .header .content a.twitter {
+#header .contact a.twitter {
   background: url(../images/twitter.png);
   margin-right: 0.5em;
 }
-#panel .header .content a.linkedin {
+#header .contact a.linkedin {
   background: url(../images/linkedin.png);
 }
-#panel ul {
-  list-style: none;
-  padding: 0;
-  position: relative;
-  margin: 0 auto;
-  width: 600px;
+#header .contact a.github {
+  background: url(../images/github.png);
+  margin-right: 0.5em;
 }
-#panel li {
+#header ul {
+  bottom: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+#header li {
   float: left;
   position: relative;
 }
-#panel li a {
+#header li a {
   background: #000;
   border: 1px solid transparent;
   color: #636057;
@@ -86,51 +96,49 @@ body {
   -moz-opacity:0.60;
   opacity: 0.60;
 }
-#panel li a:hover {
+#header li a:hover {
   color: #5b584f;
   filter:alpha(opacity=80);
   -moz-opacity:0.80;
   opacity: 0.80;
 }
-#panel li a.active {
+#header li a.active {
   background: #ffffff;
   color: #000;
   filter:alpha(opacity=100);
   -moz-opacity:1;
   opacity: 1;
 }
-#content {
+#body {
   padding-top: 1.5em;
-  margin: 0 auto;
-  width: 600px;
 }
-#content .content {
+#body .content {
   margin-top: 1.5em;
 }
-#content .content .entry {
+#body .content .entry {
   border-top: 1px solid #eee;
   padding: 0.5em;
 }
-#content .content .text {
+#body .content .text {
   margin-bottom: 0.5em;
 }
-#content .content .entry a {
+#body .content .entry a {
   color: #BB4A23;
   text-decoration: none;
 }
-#content .content .entry a:hover {
+#body .content .entry a:hover {
   text-decoration: underline;
 }
-#content .content .entry a.user {
+#body .content .entry a.user {
   font-weight: bold;
 }
-#content .content .entry .title {
+#body .content .entry .title {
   padding-bottom: 0.5em;
 }
-#content .content .entry .title a {
+#body .content .entry .title a {
   font-weight: bold;
 }
-#content .content .entry .forwarded {
+#body .content .entry .forwarded {
   background: url(../images/forwarded.png);
   float: left;
   height: 14px;
@@ -138,31 +146,31 @@ body {
   margin-right: 4px;
   width: 18px;
 }
-#content .content .right {
+#body .content .right {
   float: right;
 }
-#content .content .watchers {
+#body .content .watchers {
   background: url(../images/watchers.png) no-repeat 0 -5px;
   padding-left: 18px;
   margin-left: 1em;
 }
-#content .content .forks {
+#body .content .forks {
   background: url(../images/forks.png) no-repeat 0 -5px;
   padding-left: 18px;
   margin-left: 1em;
 }
-#content .content .entry .meta {
+#body .content .entry .meta {
   color: #999;
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
-#content .content .entry .meta a {
+#body .content .entry .meta a {
   color: #999;
 }
-#content .content .entry:hover {
+#body .content .entry:hover {
   background: #f7f7f7;
 }
-#content #loader {
+#body #loader {
   background: url(../images/loader.gif) no-repeat 50%;
   height: 4em;
 }

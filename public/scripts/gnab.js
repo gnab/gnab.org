@@ -39,8 +39,17 @@ var gnab = (function () {
     });
   }
 
+  function formatDatetime(datetime) {
+    return Date(datetime);
+  }
+
   function createFeedEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
+
+    if (entry.title) {
+      var titleTag = $('<div class="title" />').text(entry.title);
+      entryTag.append(titleTag);
+    }
 
     var textTag = $('<div class="text" />').html(' ' + entry.text);
 
@@ -54,8 +63,13 @@ var gnab = (function () {
         .prepend(forwardedTag);
     }
 
-    var timeTag = $('<a href="http://twitter.com/' + entry.user + 
-      '/status/' + entry.id + '" />').text(entry.created_at);
+    if (entry.kind == 'twitter') {
+      var timeTag = $('<a href="http://twitter.com/' + entry.user + 
+        '/status/' + entry.id + '" />').text(entry.created_at);
+    }
+    else {
+      var timeTag = $('<span />').text(formatDatetime(entry.created_at));
+    }
 
     var sourceTag = $('<span />').html(entry.source);
 
