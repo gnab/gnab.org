@@ -42,7 +42,6 @@ var gnab = (function () {
   function formatDatetime(datetime) {
     var ending, date = new Date(datetime);
 
-
     switch (date.getDate() % 10) {
       case 1:
         ending = 'st';
@@ -85,7 +84,8 @@ var gnab = (function () {
       }
     } else if (entry.kind == 'github') {
       entry.commits.forEach(function (commit) {
-        var shaTag = $('<a href="#" />').text(commit.sha.substring(0,5));
+        var shaTag = $('<a href="' + entry.repository.url + '/commit/' + 
+          commit.sha + '" />').text(commit.sha.substring(0,7));
         var commitTag = $('<div class="commit" />')
           .text(' ' + commit.message)
           .prepend(shaTag);

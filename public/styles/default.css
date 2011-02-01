@@ -122,6 +122,11 @@ body {
 #body .content .text {
   margin-bottom: 0.5em;
 }
+#body .content .commit a {
+  font-family: 'Courier New';
+  font-size: 0.8em;
+  font-weight: bold;
+}
 #body .content .entry a {
   color: #BB4A23;
   text-decoration: none;
