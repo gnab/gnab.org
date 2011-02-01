@@ -40,49 +40,68 @@ var gnab = (function () {
   }
 
   function formatDatetime(datetime) {
-    var date = new Date(datetime);
+    var ending, date = new Date(datetime);
 
-    return date.strftime('%H:%M %b %e');
+
+    switch (date.getDate() % 10) {
+      case 1:
+        ending = 'st';
+        break;
+      case 2:
+        ending = 'nd';
+        break;
+      case 3:
+        ending = 'rd';
+        break
+      default:
+        ending = 'th';
+    }
+
+    return date.strftime('%H:%M %b %e') + ending;
   }
 
   function createFeedEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
-
-    if (entry.title) {
-      var titleTag = $('<div class="title" />').text(entry.title);
-      entryTag.append(titleTag);
-    }
-
-    var textTag = $('<div class="text" />').html(' ' + entry.text);
-
-    if (entry.forwarded) {
-      var forwardedTag = $('<span class="forwarded" />');
-      var userTag = $('<a class="user" href="http://twitter.com/' + 
-        entry.user + '"/>').text(entry.user);
-
-      textTag
-        .prepend(userTag)
-        .prepend(forwardedTag);
-    }
+    var metaTag = $('<div class="meta" />');
+    var textTag = $('<div class="text" />'); 
 
     if (entry.kind == 'twitter') {
+      textTag.html(' ' + entry.text);
       var timeTag = $('<a href="http://twitter.com/' + entry.user + 
-        '/status/' + entry.id + '" />').text(entry.created_at);
-    }
-    else {
+        '/status/' + entry.id + '" />').text(formatDatetime(entry.created_at));
+      var sourceTag = $('<span />').html(entry.source);
+      metaTag.html('&nbsp;via&nbsp;')
+        .prepend(timeTag)
+        .append(sourceTag);
+
+      if (entry.forwarded) {
+        var forwardedTag = $('<span class="forwarded" />');
+        var userTag = $('<a class="user" href="http://twitter.com/' + 
+          entry.user + '"/>').text(entry.user);
+
+        textTag
+          .prepend(userTag)
+          .prepend(forwardedTag);
+      }
+    } else if (entry.kind == 'github') {
+      entry.commits.forEach(function (commit) {
+        var shaTag = $('<a href="#" />').text(commit.sha.substring(0,5));
+        var commitTag = $('<div class="commit" />')
+          .text(' ' + commit.message)
+          .prepend(shaTag);
+        textTag.append(commitTag);
+      });
       var timeTag = $('<span />').text(formatDatetime(entry.created_at));
+      var repoTag = $('<a href="' + entry.repository.url +'" />')
+        .text(entry.repository.owner + '/' + entry.repository.name);
+      metaTag.html('&nbsp;to&nbsp;')
+        .prepend(timeTag)
+        .append(repoTag);
     }
-
-    var sourceTag = $('<span />').html(entry.source);
-
-    var metaTag = $('<div class="meta" />')
-      .html('&nbsp;via&nbsp;')
-      .prepend(timeTag)
-      .append(sourceTag);
 
     return entryTag
-      .append(textTag)
-      .append(metaTag);
+        .append(textTag)
+        .append(metaTag);
   }
 
   function createCodeEntryTag(entry) {

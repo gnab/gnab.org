@@ -1,8 +1,6 @@
 require 'json'
 require 'twitter'
-require 'net/http'
-require 'net/https'
-require 'rss'
+require 'octopussy'
 require './common'
 
 module Feed
@@ -20,16 +18,24 @@ module Feed
   end
 
   def self.retrieve_activities
-    http = Net::HTTP.new('github.com', 443)
-    http.use_ssl = true
-    resp, data = http.get('/gnab.atom')
-    rss = RSS::Parser.parse(data, false)
-    rss.entries.collect do |entry|
-      {
-        :title => entry.title.content,
-        :created_at => entry.published.content,
-        :source => entry.link.href,
-        :text => entry.content.content,
+    timeline = Octopussy::Client.new.public_timeline('gnab')
+
+    timeline.select{ |entry| entry.type == 'PushEvent' }.collect do |entry|
+      { 
+        :type => 'push',
+        :created_at => DateTime.parse(entry.created_at).to_time,
+        :repository => {
+          :name => entry.repository.name,
+          :description => entry.repository.description,
+          :url => entry.repository.url,
+          :owner => entry.repository.owner
+        },
+        :commits => entry.payload.shas.collect { |sha| 
+          {
+            :message => sha[2],
+            :sha => sha[0]
+          }
+        },
         :kind => 'github'
       }
     end
