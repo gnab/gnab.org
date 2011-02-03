@@ -2,7 +2,7 @@ html {
   overflow-y: scroll;
 }
 html, body {
-  background: #ffffff;
+  background: #fff;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -16,8 +16,8 @@ body {
   width: 600px;
 }
 #header {
-  background: url(../images/header.jpg) top center;
-  height: 199px;
+  background: -webkit-gradient(radial, 50% 50%, 120, 50% 50%, 800, from(#737067), to(#434037));
+  height: 300px;
   position: relative;
 }
 #header .content {
@@ -29,11 +29,35 @@ body {
   font-size: 0.9em;
   line-height: 1.75em;
 }
-#header .contact #title{
-  color: #bb4a23; 
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 0.75em;
+#header .contact #title {
+  color: #fff; 
+  font-family: Lobster, serif;
+  padding-top: 5em;
+  text-align: center;
+  text-shadow: #535047 4px 4px 0px;
+}
+#header .contact #title .g {
+  font-size: 7em;
+}
+#header .contact #title .n {
+  font-size: 6em;
+  position: relative;
+  top: -0.09em;
+}
+#header .contact #title .a {
+  font-size: 5em;
+  position: relative;
+  top: -0.21em;
+}
+#header .contact #title .b {
+  font-size: 4.5em;
+  position: relative;
+  top: -0.3em;
+}
+#header .contact #title .org {
+  font-size: 2em;
+  position: relative;
+  top: -0.7em;
 }
 #header .contact a {
   border-bottom: 1px dotted #737067;
@@ -50,14 +74,6 @@ body {
   height: 32px;
   float: right;
   width: 32px;
-  filter:alpha(opacity=60);
-  -moz-opacity:0.60;
-  opacity: 0.60;
-}
-#header .contact a.icon:hover {
-  filter:alpha(opacity=100);
-  -moz-opacity:1;
-  opacity: 1;
 }
 #header .contact a.twitter {
   background: url(../images/twitter.png);
@@ -82,9 +98,8 @@ body {
   position: relative;
 }
 #header li a {
-  background: #000;
   border: 1px solid transparent;
-  color: #636057;
+  color: #939087;
   display: block;
   font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
   font-size: 2em;
@@ -92,22 +107,16 @@ body {
   line-height: 2em;
   margin-right: 0.25em;
   text-decoration: none;
-  filter:alpha(opacity=60);
-  -moz-opacity:0.60;
-  opacity: 0.60;
+  text-shadow: #535047 4px 4px 0px;
 }
 #header li a:hover {
-  color: #5b584f;
-  filter:alpha(opacity=80);
-  -moz-opacity:0.80;
-  opacity: 0.80;
+  background: #535047;
+  color: #939087;
 }
 #header li a.active {
-  background: #ffffff;
-  color: #000;
-  filter:alpha(opacity=100);
-  -moz-opacity:1;
-  opacity: 1;
+  background: #fff;
+  color: #333027;
+  text-shadow: none;
 }
 #body {
   padding-top: 1.5em;
@@ -173,7 +182,7 @@ body {
   color: #999;
 }
 #body .content .entry:hover {
-  background: #f7f7f7;
+  background: #f3f0e7;
 }
 #body #loader {
   background: url(../images/loader.gif) no-repeat 50%;
