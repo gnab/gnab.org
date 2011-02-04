@@ -16,7 +16,9 @@ body {
   width: 600px;
 }
 #header {
-  background: -webkit-gradient(radial, 50% 50%, 120, 50% 50%, 800, from(#737067), to(#434037));
+  background-image: -webkit-gradient(radial, 50% 50%, 120, 50% 50%, 800, from(#737067), to(#434037));
+  background-image: -moz-radial-gradient(center, circle, #737067 0%, #434037 100%);
+  background-color: #737067;
   height: 300px;
   position: relative;
 }
@@ -32,7 +34,7 @@ body {
 #header .contact #title {
   color: #fff; 
   font-family: Lobster, serif;
-  padding-top: 5em;
+  padding-top: 5.5em;
   text-align: center;
   text-shadow: #535047 4px 4px 0px;
 }
@@ -107,7 +109,6 @@ body {
   line-height: 2em;
   margin-right: 0.25em;
   text-decoration: none;
-  text-shadow: #535047 4px 4px 0px;
 }
 #header li a:hover {
   background: #535047;
@@ -126,7 +127,7 @@ body {
 }
 #body .content .entry {
   border-top: 1px solid #eee;
-  padding: 0.5em;
+  padding: 0.75em 0.5em;
 }
 #body .content .text {
   margin-bottom: 0.5em;
@@ -164,22 +165,22 @@ body {
   float: right;
 }
 #body .content .watchers {
-  background: url(../images/watchers.png) no-repeat 0 -5px;
+  background: url(../images/watchers.png) no-repeat 0 -3px;
   padding-left: 18px;
   margin-left: 1em;
 }
 #body .content .forks {
-  background: url(../images/forks.png) no-repeat 0 -5px;
+  background: url(../images/forks.png) no-repeat 0 -3px;
   padding-left: 18px;
   margin-left: 1em;
 }
 #body .content .entry .meta {
-  color: #999;
-  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
+  color: #a3a0a7;
+  font-family: Cantarell, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
 #body .content .entry .meta a {
-  color: #999;
+  color: #a3a097;
 }
 #body .content .entry:hover {
   background: #f3f0e7;

@@ -67,7 +67,10 @@ module Feed
 
     feed = activities + tweets
 
-    feed.sort_by!{ |e| e[:created_at] }.reverse!
+    feed = feed.sort_by { |e| e[:created_at] }.reverse.collect do |e|
+      e[:created_at] = e[:created_at].strftime('%d %b %Y %T %z')
+      e
+    end
 
     JSON(feed)
   end
