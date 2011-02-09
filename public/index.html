@@ -3,7 +3,6 @@
   <head>
     <link href="styles/default.css" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Cantarell" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div id="header">
@@ -19,7 +18,7 @@
         <ul>
           <li><a id="feedTab" href="#/feed">FEED</a></li>
           <li><a id="codeTab" class="trans" href="#/code">CODE</a></li>
-          <li><a id="linksTab" href="#/links">LINKS</a></li>
+          <li><a id="aboutTab" href="#/about">ABOUT</a></li>
         </ul>
         <div style="clear: both"></div>
       </div>
@@ -35,9 +34,11 @@
         repository for this website.
         <div class="content"></div>
       </div>
-      <div id="links" class="hidden">
-        These are my Google bookmarks.
-        <div class="content"></div>
+      <div id="about" class="hidden">
+        The is the website of ...
+        <div class="content">
+          <img class="profile" src="http://www.gravatar.com/avatar/a3331c953986139c559ad43e64d1f65c.png?s=128" />
+        </div>
       </div>
       <div id="loader" class="hidden"></div>
     </div>
@@ -57,8 +58,8 @@
           this.get('#/code', function () {
             gnab.gotoTab('code');
           });
-          this.get('#/links', function () {
-            //gnab.gotoTab('links');
+          this.get('#/about', function () {
+            gnab.gotoTab('about');
           });
         });
 

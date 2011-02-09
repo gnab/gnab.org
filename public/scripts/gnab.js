@@ -19,7 +19,8 @@ var gnab = (function () {
   }
 
   Tab.prototype.load = function () {
-    var self = this, content = $('#' + this.id + ' .content');
+    var self = this, content = $('#' + this.id + ' .content'), 
+      lastDayOffset = -1;
 
     content.hide();
     $('#loader').show();
@@ -31,6 +32,35 @@ var gnab = (function () {
 
       $(entries).each(function(i, entry) {
         var entryTag = self.createEntryTag(entry);
+        var dayOffset = entryAgeInDays(entry);
+
+        if (dayOffset > lastDayOffset) {
+          var dateTag = $('<div class="date" />');
+
+          switch (dayOffset) {
+            case 0:
+              dateTag.text('Today');
+              break;
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+              dateTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
+                dayOffset).strftime('%A'));
+              break;
+            case 7:
+              dateTag.text('Past');
+              break;
+          }
+
+          if (dateTag.text() !== '') {
+            content.append(dateTag);
+          }
+          lastDayOffset = dayOffset;
+        }
+
         content.append(entryTag);
       });
 
@@ -39,32 +69,17 @@ var gnab = (function () {
     });
   }
 
-  function formatDatetime(datetime) {
-    var ending, date = new Date(datetime);
-
-    switch (date.getDate() % 10) {
-      case 1:
-        ending = 'st';
-        break;
-      case 2:
-        ending = 'nd';
-        break;
-      case 3:
-        ending = 'rd';
-        break
-      default:
-        ending = 'th';
-    }
-
-    return date.strftime('%H:%M %b %e') + ending;
+  function entryAgeInDays(entry) {
+    return Math.round((Date.now() - new Date(entry.created_at)) / 
+      1000 / 3600 / 24);
   }
 
   function createFeedEntryTag(entry) {
     var entryTag = $('<div class="entry" />');
     var metaTag = $('<div class="meta" />');
-    var textTag = $('<div class="text" />'); 
+    var textTag = $('<div class="text" />');
 
-    if (entry.kind == 'twitter') {
+    if (entry.kind === 'twitter') {
       textTag.html(' ' + entry.text);
       var timeTag = $('<a href="http://twitter.com/' + entry.user + 
         '/status/' + entry.id + '" />').text(formatDatetime(entry.created_at));
@@ -82,7 +97,7 @@ var gnab = (function () {
           .prepend(userTag)
           .prepend(forwardedTag);
       }
-    } else if (entry.kind == 'github') {
+    } else if (entry.kind === 'github') {
       entry.commits.forEach(function (commit) {
         var shaTag = $('<a href="' + entry.repository.url + '/commit/' + 
           commit.sha + '" />').text(commit.sha.substring(0,7));
@@ -100,8 +115,8 @@ var gnab = (function () {
     }
 
     return entryTag
-        .append(textTag)
-        .append(metaTag);
+      .append(textTag)
+      .append(metaTag);
   }
 
   function createCodeEntryTag(entry) {
@@ -133,11 +148,33 @@ var gnab = (function () {
       .append(metaTag);
   }
 
+  function formatDatetime(datetime) {
+    var ending, date = new Date(datetime);
+
+    switch (date.getDate() % 10) {
+      case 1:
+        ending = 'st';
+        break;
+      case 2:
+        ending = 'nd';
+        break;
+      case 3:
+        ending = 'rd';
+        break
+      default:
+        ending = 'th';
+    }
+
+    return date.strftime('%H:%M %b %e') + ending;
+  }
+
   var currentTab, tabs = {
     feed: new Tab('feed', createFeedEntryTag), 
     code: new Tab('code', createCodeEntryTag), 
-    links: new Tab('links')
+    about: new Tab('about')
   }
+
+  tabs['about'].loaded = true;
   
   return {
     gotoTab: function(tab) {
