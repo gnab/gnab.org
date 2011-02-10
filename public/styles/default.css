@@ -19,77 +19,42 @@ body {
   background-image: -webkit-gradient(radial, 50% 50%, 120, 50% 50%, 800, from(#737067), to(#434037));
   background-image: -moz-radial-gradient(center, circle, #737067 0%, #434037 100%);
   background-color: #737067;
-  height: 300px;
+  height: 275px;
   position: relative;
 }
 #header .content {
   padding-top: 1em;
 }
-#header .contact {
-  color: #939087;
-  font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Helvetica, Arial, sans-serif;
-  font-size: 0.9em;
-  line-height: 1.75em;
-}
-#header .contact #title {
+#header #title {
   color: #fff; 
   font-family: Lobster, serif;
-  padding-top: 5.5em;
+  font-size: 0.9em;
+  padding-top: 1em;
   text-align: center;
   text-shadow: #535047 4px 4px 0px;
 }
-#header .contact #title .g {
+#header #title .g {
   font-size: 7em;
 }
-#header .contact #title .n {
+#header #title .n {
   font-size: 6em;
   position: relative;
   top: -0.09em;
 }
-#header .contact #title .a {
+#header #title .a {
   font-size: 5em;
   position: relative;
   top: -0.21em;
 }
-#header .contact #title .b {
+#header #title .b {
   font-size: 4.5em;
   position: relative;
   top: -0.3em;
 }
-#header .contact #title .org {
+#header #title .org {
   font-size: 2em;
   position: relative;
   top: -0.7em;
-}
-#header .contact a {
-  border-bottom: 1px dotted #737067;
-  color: #b3b0a7;
-  text-decoration: none;
-}
-#header .contact a:hover {
-  color: #e3e0d7; 
-  border-bottom: 1px dotted #e3e0d7;
-}
-#header .contact a.icon {
-  border: none;
-  display: block;
-  height: 32px;
-  float: right;
-  width: 32px;
-}
-#header .contact a.icon:hover {
-  background-position: 32px 0px;
-}
-#header .contact a.twitter {
-  background: url(../images/twitter.png);
-  margin-right: 0.5em;
-}
-#header .contact a.linkedin {
-  background: url(../images/linkedin.png);
-}
-#header .contact a.github {
-  background: url(../images/github.png);
-  margin-right: 0.5em;
 }
 #header ul {
   bottom: 0;
@@ -207,9 +172,31 @@ body {
   border-top: 1px solid #eee;
   padding-top: 0.75em;
 }
+#body #about .content .profile {
+  float: left;
+  margin-right: 1em;
+}
+#body #about .content a.icon {
+  border: none;
+  display: block;
+  height: 32px;
+  float: right;
+  width: 32px;
+}
+#body #about .content a.twitter {
+  background: url(../images/twitter.png);
+  margin-right: 0.5em;
+}
+#body #about .content a.linkedin {
+  background: url(../images/linkedin.png);
+}
+#body #about .content a.github {
+  background: url(../images/github.png);
+  margin-right: 0.5em;
+}
 #body #loader {
   background: url(../images/loader.gif) no-repeat 50%;
-  height: 4em;
+  height: 5em;
 }
 .hidden {
   display: none;
