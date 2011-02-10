@@ -42,6 +42,8 @@ var gnab = (function () {
               dateTag.text('Today');
               break;
             case 1:
+              dateTag.text('Yesterday');
+              break;
             case 2:
             case 3:
             case 4:
@@ -70,8 +72,10 @@ var gnab = (function () {
   }
 
   function entryAgeInDays(entry) {
-    return Math.round((Date.now() - new Date(entry.created_at)) / 
-      1000 / 3600 / 24);
+    var now = Math.floor(new Date() / 1000 / 3600 / 24),
+        created_at = Math.floor(new Date(entry.created_at) / 1000 / 3600 / 24);
+
+    return now - created_at;
   }
 
   function createFeedEntryTag(entry) {

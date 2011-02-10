@@ -194,11 +194,11 @@ body {
   float: left;
   font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
   height: 2em;
-  left: -5em;
+  left: -5.5em;
   padding-top: 0.8em;
   position: absolute;
   text-align: center;
-  width: 5em;
+  width: 5.5em;
 }
 #body #about .content {
   border-top: 1px solid #eee;
