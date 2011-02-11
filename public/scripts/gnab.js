@@ -37,24 +37,18 @@ var gnab = (function () {
         if (dayOffset > lastDayOffset) {
           var dateTag = $('<div class="date" />');
 
-          switch (dayOffset) {
-            case 0:
-              dateTag.text('Today');
-              break;
-            case 1:
-              dateTag.text('Yesterday');
-              break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-              dateTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
-                dayOffset).strftime('%A'));
-              break;
-            case 7:
-              dateTag.text('Past');
-              break;
+          if (dayOffset === 0) {
+            dateTag.text('TODAY');
+          }
+          else if (dayOffset === 1) {
+            dateTag.text('YESTERDAY');
+          }
+          else if (dayOffset >= 2  && dayOffset <= 6) {
+            dateTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
+              dayOffset).strftime('%A').toUpperCase());
+          }
+          else if (dayOffset === 7) {
+              dateTag.text('A WEEK AGO');
           }
 
           if (dateTag.text() !== '') {
