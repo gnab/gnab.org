@@ -35,24 +35,25 @@ var gnab = (function () {
         var dayOffset = entryAgeInDays(entry);
 
         if (dayOffset > lastDayOffset) {
-          var dateTag = $('<div class="date" />');
+          var tagTag = $('<div class="tag" />');
 
           if (dayOffset === 0) {
-            dateTag.text('TODAY');
+            tagTag.text('TODAY');
+            tagTag.addClass('today');
           }
           else if (dayOffset === 1) {
-            dateTag.text('YESTERDAY');
+            tagTag.text('YESTERDAY');
           }
           else if (dayOffset >= 2  && dayOffset <= 6) {
-            dateTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
+            tagTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
               dayOffset).strftime('%A').toUpperCase());
           }
           else if (dayOffset === 7) {
-              dateTag.text('A WEEK AGO');
+              tagTag.text('A WEEK AGO');
           }
 
-          if (dateTag.text() !== '') {
-            content.append(dateTag);
+          if (tagTag.text() !== '') {
+            content.append(tagTag);
           }
           lastDayOffset = dayOffset;
         }
