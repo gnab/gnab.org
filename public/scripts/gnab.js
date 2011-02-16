@@ -19,8 +19,9 @@ var gnab = (function () {
   }
 
   Tab.prototype.load = function () {
-    var self = this, content = $('#' + this.id + ' .content'), 
-      lastDayOffset = -1;
+    var self = this, 
+        content = $('#' + this.id + ' .content'), 
+        createTagTag = createTagTagCreator();
 
     content.hide();
     $('#loader').show();
@@ -31,32 +32,11 @@ var gnab = (function () {
       content.empty();
 
       $(entries).each(function(i, entry) {
-        var entryTag = self.createEntryTag(entry);
-        var dayOffset = entryAgeInDays(entry);
+        var entryTag = self.createEntryTag(entry),
+            tagTag = createTagTag(entry);
 
-        if (dayOffset > lastDayOffset) {
-          var tagTag = $('<div class="tag" />');
-
-          if (dayOffset === 0) {
-            tagTag.text('TODAY');
-            tagTag.addClass('today');
-          }
-          else if (dayOffset === 1) {
-            tagTag.text('YESTERDAY');
-            tagTag.addClass('yesterday');
-          }
-          else if (dayOffset >= 2  && dayOffset <= 6) {
-            tagTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
-              dayOffset).strftime('%A').toUpperCase());
-          }
-          else if (dayOffset === 7) {
-              tagTag.text('A WEEK AGO');
-          }
-
-          if (tagTag.text() !== '') {
-            content.append(tagTag);
-          }
-          lastDayOffset = dayOffset;
+        if (tagTag) {
+          content.append(tagTag);
         }
 
         content.append(entryTag);
@@ -67,11 +47,54 @@ var gnab = (function () {
     });
   }
 
+  function createTagTagCreator() {
+    var lastDayOffset = -1;
+
+    return function (entry) {
+      if (lastDayOffset >= 7) {
+        return;
+      }
+
+      var entryAge = entryAgeInDays(entry);
+
+      if (entryAge > lastDayOffset) {
+        var tagTag = $('<div class="tag" />');
+
+        formatTagTag(tagTag, entryAge);
+
+        lastDayOffset = entryAge;
+
+        if (tagTag.text() !== '') {
+          return tagTag;
+        }
+      }
+    }
+  }
+
   function entryAgeInDays(entry) {
     var now = Math.floor(new Date() / 1000 / 3600 / 24),
-        created_at = Math.floor(new Date(entry.created_at) / 1000 / 3600 / 24);
+        entryDateStr = entry.updated_at || entry.created_at,
+        entryDate = Math.floor(new Date(entryDateStr) / 1000 / 3600 / 24);
 
-    return now - created_at;
+    return now - entryDate;
+  }
+
+  function formatTagTag(tagTag, entryAge) {
+    if (entryAge === 0) {
+      tagTag.text('TODAY');
+      tagTag.addClass('today');
+    }
+    else if (entryAge === 1) {
+      tagTag.text('YESTERDAY');
+      tagTag.addClass('yesterday');
+    }
+    else if (entryAge >= 2  && entryAge <= 6) {
+      tagTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
+        entryAge).strftime('%A').toUpperCase());
+    }
+    else if (entryAge >= 7) {
+      tagTag.text('EARLIER');
+    }
   }
 
   function createFeedEntryTag(entry) {

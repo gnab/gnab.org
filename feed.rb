@@ -68,7 +68,7 @@ module Feed
     feed = activities + tweets
 
     feed = feed.sort_by { |e| e[:created_at] }.reverse.collect do |e|
-      e[:created_at] = e[:created_at].strftime('%d %b %Y %T %z')
+      e[:created_at] = Common.format_datetime(e[:created_at])
       e
     end
 
