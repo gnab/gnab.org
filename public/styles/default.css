@@ -165,6 +165,9 @@ body {
 #body .content .today {
   background: #BB4A23;
 }
+#body .content .yesterday {
+  background: #434037;
+}
 #body #about .content {
   border-top: 1px solid #eee;
   padding-top: 0.75em;

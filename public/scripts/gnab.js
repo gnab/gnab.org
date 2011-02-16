@@ -43,6 +43,7 @@ var gnab = (function () {
           }
           else if (dayOffset === 1) {
             tagTag.text('YESTERDAY');
+            tagTag.addClass('yesterday');
           }
           else if (dayOffset >= 2  && dayOffset <= 6) {
             tagTag.text(new Date(Date.now() - 1000 * 3600 * 24 * 
