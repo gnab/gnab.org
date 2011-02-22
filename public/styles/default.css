@@ -10,6 +10,14 @@ html, body {
 body {
   font-family: Georgia, Times, serif;
   font-size: 100%;
+  line-height: 1.5em;
+}
+a {
+  color: #BB4A23;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 #header {
   background-image: -webkit-gradient(radial, 50% 50%, 120, 50% 50%, 800, from(#737067), to(#434037));
@@ -22,7 +30,7 @@ body {
   color: #fff; 
   font-family: Lobster, serif;
   font-size: 0.9em;
-  padding-top: 2em;
+  padding-top: 5em;
   text-align: center;
   text-shadow: #535047 4px 4px 0px;
 }
@@ -99,13 +107,6 @@ body {
   font-size: 0.8em;
   font-weight: bold;
 }
-#body .content .entry a {
-  color: #BB4A23;
-  text-decoration: none;
-}
-#body .content .entry a:hover {
-  text-decoration: underline;
-}
 #body .content .entry a.user {
   font-weight: bold;
 }
@@ -120,20 +121,20 @@ body {
   float: left;
   height: 14px;
   margin-right: 4px;
-  margin-top: 3px;
+  margin-top: 6px;
   width: 18px;
 }
 #body .content .entry .right {
   float: right;
 }
 #body .content .entry .watchers {
-  background: url(../images/watchers.png) no-repeat 0 -3px;
+  background: url(../images/watchers.png) no-repeat;
   font-weight: bold;
   padding-left: 18px;
   margin-left: 1em;
 }
 #body .content .entry .forks {
-  background: url(../images/forks.png) no-repeat 0 -3px;
+  background: url(../images/forks.png) no-repeat;
   font-weight: bold;
   padding-left: 18px;
   margin-left: 1em;
@@ -157,7 +158,7 @@ body {
   height: 1.5em;
   left: -6.5em;
   margin-top: 1.2em;
-  padding-top: 0.3em;
+  padding: 0.1em;
   position: absolute;
   text-align: center;
   width: 5.5em;
@@ -171,6 +172,11 @@ body {
 #body #about .content {
   border-top: 1px solid #eee;
   padding-top: 0.75em;
+}
+#body #about #name {
+  font-family: Lobster, serif;
+  font-size: 1.5em;
+  padding-top: 0.2em;
 }
 #body #about .content .profile {
   float: left;
