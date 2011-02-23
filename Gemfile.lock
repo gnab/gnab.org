@@ -1,0 +1,43 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    addressable (2.2.4)
+    crack (0.1.8)
+    faraday (0.5.6)
+      addressable (~> 2.2.4)
+      multipart-post (~> 1.1.0)
+      rack (>= 1.1.0, < 2)
+    faraday_middleware (0.3.2)
+      faraday (~> 0.5.4)
+    hashie (0.4.0)
+    httparty (0.6.1)
+      crack (= 0.1.8)
+    json (1.5.1)
+    multi_json (0.0.5)
+    multi_xml (0.2.1)
+    multipart-post (1.1.0)
+    octopussy (0.3.1)
+      hashie (~> 0.4.0)
+      httparty (~> 0.6.1)
+    rack (1.2.1)
+    simple_oauth (0.1.4)
+    sinatra (1.1.3)
+      rack (~> 1.1)
+      tilt (>= 1.2.2, < 2.0)
+    tilt (1.2.2)
+    twitter (1.1.1)
+      faraday (~> 0.5.4)
+      faraday_middleware (~> 0.3.1)
+      hashie (~> 0.4.0)
+      multi_json (~> 0.0.5)
+      multi_xml (~> 0.2.0)
+      simple_oauth (~> 0.1.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json
+  octopussy
+  sinatra
+  twitter
