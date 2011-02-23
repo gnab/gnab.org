@@ -4,31 +4,24 @@ require 'net/http'
 require './common'
 
 module Code
-  URL = 'http://github.com/api/v2/json/repos/search/username:gnab'
+  extend Common
 
-  def self.get_updated_at(entry)
-    datetime = DateTime.parse(entry['pushed_at']).to_time
-    Common.format_datetime(datetime)
-  end
+  URL = 'http://github.com/api/v2/json/repos/search/username:gnab'
+  FIELDS = [:name, :description, :url, :pushed_at, :language, :url, :watchers, 
+            :forks] 
 
   def self.retrieve
     data = Net::HTTP.get_response(URI.parse(URL)).body
-    entries = JSON.parse(data)['repositories']
-
-    projects = entries.sort_by {|e| e['pushed_at']}.reverse.collect do |entry|
-      {
-        :name => entry['name'],
-        :description => entry['description'],
-        :url => entry['url'],
-        :created_at => entry['created_at'],
-        :updated_at => get_updated_at(entry),
-        :language => entry['language'],
-        :url => entry['url'],
-        :watchers => entry['watchers'],
-        :forks => entry['forks']
-      }
+    
+    repos = JSON.parse(data)['repositories'].collect do |entry|
+      FIELDS.inject({}) do |repo, field|
+        repo[field] = entry[field.to_s]
+        repo
+      end
     end
 
-    JSON(projects)
+    repos = sort_by_and_format_datetime(repos, :pushed_at)
+
+    JSON(repos)
   end
 end

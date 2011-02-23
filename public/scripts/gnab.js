@@ -73,7 +73,7 @@ var gnab = (function () {
 
   function entryAgeInDays(entry) {
     var now = Math.floor(new Date() / 1000 / 3600 / 24),
-        entryDateStr = entry.updated_at || entry.created_at,
+        entryDateStr = entry.pushed_at || entry.created_at,
         entryDate = Math.floor(new Date(entryDateStr) / 1000 / 3600 / 24);
 
     return now - entryDate;
@@ -160,7 +160,7 @@ var gnab = (function () {
     var textTag = $('<div class="text" />').html(' ' + entry.description);
 
     var metaTag = $('<div class="meta" />')
-      .text('Last updated ' + entry.updated_at);
+      .text('Last updated ' + formatDatetime(entry.pushed_at));
 
     return entryTag
       .append(forksTag)

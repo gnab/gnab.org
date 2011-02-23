@@ -4,16 +4,13 @@ require 'octopussy'
 require './common'
 
 module Feed
+  extend Common
+
   def self.retrieve
     activities = retrieve_activities
     tweets = retrieve_tweets
 
-    feed = activities + tweets
-
-    feed = feed.sort_by { |e| e[:created_at] }.reverse.collect do |e|
-      e[:created_at] = Common.format_datetime(e[:created_at])
-      e
-    end
+    feed = sort_by_and_format_datetime(activities + tweets, :created_at)
 
     JSON(feed)
   end
