@@ -173,12 +173,8 @@ a:hover {
   border-top: 1px solid #eee;
   padding-top: 0.75em;
 }
-#body #about #name {
-  font-family: Lobster, serif;
-  font-size: 1.5em;
-  padding-top: 0.2em;
-}
 #body #about .content .profile {
+  border: 5px solid #939087;
   float: left;
   margin-right: 1em;
 }
@@ -191,6 +187,7 @@ a:hover {
 }
 #body #about .content a.twitter {
   background: url(../images/twitter.png);
+  margin-left: 1em;
   margin-right: 0.5em;
 }
 #body #about .content a.linkedin {
