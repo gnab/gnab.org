@@ -4,17 +4,18 @@ require 'octopussy'
 require './common'
 
 module Feed
-  def self.format_tweet_text(entry)
-    text = entry['text']
+  def self.retrieve
+    activities = retrieve_activities
+    tweets = retrieve_tweets
 
-    text.gsub!(/(https?:\/\/[^\s]+)/, '<a href="\1">\1</a>')
-    text.gsub!(/@([a-z][a-z0-9_]*)/i, '@<a href="http://twitter.com/\1">\1</a>')
-    text.gsub!(/(#[a-z][a-z0-9_]*)/i) do |match|
-      '<a href="http://twitter.com/search?q=' +
-        CGI::escape(match) + '">' + match + '</a>'
+    feed = activities + tweets
+
+    feed = feed.sort_by { |e| e[:created_at] }.reverse.collect do |e|
+      e[:created_at] = Common.format_datetime(e[:created_at])
+      e
     end
 
-    text
+    JSON(feed)
   end
 
   def self.retrieve_activities
@@ -35,7 +36,7 @@ module Feed
             :message => sha[2],
             :sha => sha[0]
           }
-        },
+        }.reverse,
         :kind => 'github'
       }
     end
@@ -52,7 +53,7 @@ module Feed
       {
         :forwarded => forwarded,
         :source => entry['source'],
-        :text => format_tweet_text(entry),
+        :text => format_tweet_text(entry['text']),
         :created_at => created_at.to_time,
         :user => entry['user']['screen_name'],
         :id => entry['id_str'],
@@ -61,17 +62,13 @@ module Feed
     end
   end
 
-  def self.retrieve
-    activities = retrieve_activities
-    tweets = retrieve_tweets
-
-    feed = activities + tweets
-
-    feed = feed.sort_by { |e| e[:created_at] }.reverse.collect do |e|
-      e[:created_at] = Common.format_datetime(e[:created_at])
-      e
-    end
-
-    JSON(feed)
+  def self.format_tweet_text(text)
+    text
+      .gsub(/(https?:\/\/[^\s]+)/, '<a href="\1">\1</a>')
+      .gsub(/@([a-z][a-z0-9_]*)/i, '@<a href="http://twitter.com/\1">\1</a>')
+      .gsub(/(#[a-z][a-z0-9_]*)/i) do |match|
+      '<a href="http://twitter.com/search?q=' +
+        CGI::escape(match) + '">' + match + '</a>'
+      end
   end
 end
