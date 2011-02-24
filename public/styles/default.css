@@ -145,6 +145,14 @@ a:hover {
   font-family: helvetica, arial, freesans, clean, sans-serif;
   font-size: 0.8em;
 }
+#body .content .entry .tweet {
+  background: url(../images/tweet.png) no-repeat 2px 4px;
+  padding-left: 2.3em;
+}
+#body .content .entry .push {
+  background: url(../images/push.png) no-repeat 0 1px;
+  padding-left: 2.3em;
+}
 #body .content .entry .meta a {
   color: #a3a097;
 }

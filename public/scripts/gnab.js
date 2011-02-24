@@ -111,6 +111,7 @@ var gnab = (function () {
       var timeTag = $('<a href="http://twitter.com/' + entry.user + 
         '/status/' + entry.id + '" />').text(formatDatetime(entry.created_at));
       var sourceTag = $('<span />').html(entry.source);
+      metaTag.addClass('tweet');
       metaTag.html('&nbsp;via&nbsp;')
         .prepend(timeTag)
         .append(sourceTag);
@@ -136,6 +137,7 @@ var gnab = (function () {
       var timeTag = $('<span />').text(formatDatetime(entry.created_at));
       var repoTag = $('<a href="' + entry.repository.url +'" />')
         .text(entry.repository.owner + '/' + entry.repository.name);
+      metaTag.addClass('push');
       metaTag.html('&nbsp;to&nbsp;')
         .prepend(timeTag)
         .append(repoTag);
