@@ -72,7 +72,7 @@ a:hover {
   border: 1px solid transparent;
   color: #939087;
   display: block;
-  font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
+  font-family: Anton, sans-serif;
   font-size: 2em;
   line-height: 2em;
   margin-right: 0.25em;
@@ -155,11 +155,11 @@ a:hover {
   background: #939087;
   color: #fff;
   float: left;
-  font-family: FranchiseRegular, HelveticaNeue-Bold, 'League Gothic', Impact, sans-serif;
+  font-family: Anton, sans-serif;
   height: 1.5em;
   left: -6.5em;
   margin-top: 1.2em;
-  padding: 0.1em;
+  padding: 0.2em 0.1em 0.1em 0.1em;
   position: absolute;
   text-align: center;
   width: 5.5em;
