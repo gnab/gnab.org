@@ -92,6 +92,7 @@ a:hover {
   padding-top: 1.5em;
 }
 #body .content {
+  display: none;
   margin-top: 1.5em;
   position: relative;
 }

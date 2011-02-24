@@ -11,11 +11,15 @@ var gnab = (function () {
     if (!this.loaded) {
       this.load();
     }
+    else {
+      $('#' + this.id + ' .content').fadeIn();
+    }
   }
 
   Tab.prototype.hide = function () {
     $('#' + this.id + 'Tab').removeClass('active');
     $('#' + this.id).hide();
+    $('#' + this.id + ' .content').hide();
   }
 
   Tab.prototype.load = function () {
