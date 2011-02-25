@@ -6,11 +6,14 @@ require './common'
 module Feed
   extend Common
 
+  ITEMS_URL = 'http://www.google.no/reader/public/javascript/user/16092426485513345180/state/com.google/%s?n=20'
+
   def self.retrieve
     activities = retrieve_activities
     tweets = retrieve_tweets
+    items = retrieve_shared_items
 
-    feed = sort_by_and_format_datetime(activities + tweets, :created_at)
+    feed = sort_by_and_format_datetime(activities + tweets + items, :created_at)
 
     JSON(feed)
   end
@@ -39,6 +42,31 @@ module Feed
     end
   end
 
+  def self.retrieve_shared_items
+    data = Net::HTTP.get_response(URI.parse(ITEMS_URL % ['broadcast'])).body
+
+    items = JSON.parse(data)['items'].collect do |entry|
+      {
+        :forwarded => true,
+        :title => entry['title'],
+        :text => format_item_text(entry['content'].to_s),
+        :created_at => Time.at(entry['published'].to_i),
+        :url => entry['alternate']['href'],
+        :author => entry['author'],
+        :source => {
+          :title => entry['origin']['title'],
+          :url => entry['origin']['htmlUrl']
+        },
+        :kind => 'reader'
+      }
+    end
+  end
+
+  def self.format_item_text(text)
+    format_and_escape_urls(text.strip)
+      .gsub(/\n/, '<br />')
+  end
+
   def self.retrieve_tweets
     timeline = Twitter.user_timeline('gnab', :include_rts => true)
 
@@ -60,12 +88,18 @@ module Feed
   end
 
   def self.format_tweet_text(text)
-    text
-      .gsub(/(https?:\/\/[^\s]+)/, '<a href="\1">\1</a>')
+    format_and_escape_urls(text)
       .gsub(/@([a-z][a-z0-9_]*)/i, '@<a href="http://twitter.com/\1">\1</a>')
       .gsub(/(#[a-z][a-z0-9_]*)/i) do |match|
-      '<a href="http://twitter.com/search?q=' +
-        CGI::escape(match) + '">' + match + '</a>'
+        '<a href="http://twitter.com/search?q=%s">%s</a>' %
+          [CGI::escape(match), match]
       end
+  end
+
+  def self.format_and_escape_urls(text)
+    text.gsub(/(https?:\/\/[^\s]+)/i) do |match|
+      escaped_url = CGI::escape_html(match)
+      '<a href="%s">%s</a>' % [escaped_url, escaped_url]
+    end
   end
 end

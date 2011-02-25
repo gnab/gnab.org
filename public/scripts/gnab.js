@@ -141,6 +141,25 @@ var gnab = (function () {
       metaTag.html('&nbsp;to&nbsp;')
         .prepend(timeTag)
         .append(repoTag);
+    } else if (entry.kind === 'reader') {
+      var titleTag = $('<div class="title" />')
+        .append($('<a href="' + entry.url + '"/>').text(entry.title));
+      if (entry.forwarded) {
+        var forwardedTag = $('<span class="forwarded" />');
+
+        titleTag
+          .prepend(forwardedTag);
+      }
+      var timeTag = $('<span />').text(formatDatetime(entry.created_at));
+      textTag.html(entry.text);
+      var sourceTag = $('<a href="' + entry.source.url +'" />')
+        .text(entry.source.title);
+      metaTag.addClass('item');
+      metaTag.html('&nbsp;from&nbsp;')
+        .prepend(timeTag)
+        .append(sourceTag);
+      entryTag
+        .append(titleTag);
     }
 
     return entryTag

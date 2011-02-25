@@ -118,12 +118,11 @@ a:hover {
   font-weight: bold;
 }
 #body .content .entry .forwarded {
-  background: url(../images/forwarded.png);
+  background: url(../images/forwarded.png) no-repeat;
   float: left;
   height: 14px;
-  margin-right: 4px;
   margin-top: 6px;
-  width: 18px;
+  width: 22px;
 }
 #body .content .entry .right {
   float: right;
@@ -146,12 +145,16 @@ a:hover {
   font-size: 0.8em;
 }
 #body .content .entry .tweet {
-  background: url(../images/tweet.png) no-repeat 2px 4px;
-  padding-left: 2.3em;
+  background: url(../images/tweet.png) no-repeat 0 3px;
+  padding-left: 22px;
 }
 #body .content .entry .push {
-  background: url(../images/push.png) no-repeat 0 1px;
-  padding-left: 2.3em;
+  background: url(../images/push.png) no-repeat 0 3px;
+  padding-left: 22px;
+}
+#body .content .entry .item {
+  background: url(../images/item.png) no-repeat 2px 6px;
+  padding-left: 22px;
 }
 #body .content .entry .meta a {
   color: #a3a097;
