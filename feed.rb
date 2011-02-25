@@ -11,9 +11,9 @@ module Feed
   def self.retrieve
     activities = retrieve_activities
     tweets = retrieve_tweets
-    items = retrieve_shared_items
+    posts = retrieve_shared_posts
 
-    feed = sort_by_and_format_datetime(activities + tweets + items, :created_at)
+    feed = sort_by_and_format_datetime(activities + tweets + posts, :created_at)
 
     JSON(feed)
   end
@@ -42,14 +42,14 @@ module Feed
     end
   end
 
-  def self.retrieve_shared_items
+  def self.retrieve_shared_posts
     data = Net::HTTP.get_response(URI.parse(ITEMS_URL % ['broadcast'])).body
 
-    items = JSON.parse(data)['items'].collect do |entry|
+    JSON.parse(data)['items'].collect do |entry|
       {
         :forwarded => true,
         :title => entry['title'],
-        :text => format_item_text(entry['content'].to_s),
+        :text => format_post_text(entry['content'].to_s),
         :created_at => Time.at(entry['published'].to_i),
         :url => entry['alternate']['href'],
         :author => entry['author'],
@@ -62,9 +62,10 @@ module Feed
     end
   end
 
-  def self.format_item_text(text)
-    format_and_escape_urls(text.strip)
-      .gsub(/\n/, '<br />')
+  def self.format_post_text(text)
+    text
+      .gsub(/\[image:[^\]]+?\]/i, '')
+      .format_and_escape_urls
   end
 
   def self.retrieve_tweets
@@ -88,18 +89,12 @@ module Feed
   end
 
   def self.format_tweet_text(text)
-    format_and_escape_urls(text)
+    text
+      .format_and_escape_urls
       .gsub(/@([a-z][a-z0-9_]*)/i, '@<a href="http://twitter.com/\1">\1</a>')
       .gsub(/(#[a-z][a-z0-9_]*)/i) do |match|
         '<a href="http://twitter.com/search?q=%s">%s</a>' %
           [CGI::escape(match), match]
       end
-  end
-
-  def self.format_and_escape_urls(text)
-    text.gsub(/(https?:\/\/[^\s]+)/i) do |match|
-      escaped_url = CGI::escape_html(match)
-      '<a href="%s">%s</a>' % [escaped_url, escaped_url]
-    end
   end
 end

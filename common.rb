@@ -11,3 +11,12 @@ module Common
     datetime.strftime('%d %b %Y %T %z')
   end
 end
+
+class String
+  def format_and_escape_urls
+    self.gsub(/(https?:\/\/[^\s]+)/i) do |match|
+      escaped_url = CGI::escape_html(match)
+      '<a href="%s">%s</a>' % [escaped_url, escaped_url]
+    end
+  end
+end

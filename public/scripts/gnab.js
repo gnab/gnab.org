@@ -154,7 +154,7 @@ var gnab = (function () {
       textTag.html(entry.text);
       var sourceTag = $('<a href="' + entry.source.url +'" />')
         .text(entry.source.title);
-      metaTag.addClass('item');
+      metaTag.addClass('post');
       metaTag.html('&nbsp;from&nbsp;')
         .prepend(timeTag)
         .append(sourceTag);

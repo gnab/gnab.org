@@ -152,8 +152,8 @@ a:hover {
   background: url(../images/push.png) no-repeat 0 3px;
   padding-left: 22px;
 }
-#body .content .entry .item {
-  background: url(../images/item.png) no-repeat 2px 6px;
+#body .content .entry .post {
+  background: url(../images/post.png) no-repeat 2px 6px;
   padding-left: 22px;
 }
 #body .content .entry .meta a {
