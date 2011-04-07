@@ -61,6 +61,10 @@ var gnab = (function () {
 
       var entryAge = entryAgeInDays(entry);
 
+      if (lastDayOffset == -1 && entryAge >= 7) {
+        return;
+      }
+
       if (entryAge > lastDayOffset) {
         var tagTag = $('<div class="tag" />');
 
