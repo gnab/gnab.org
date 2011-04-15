@@ -19,7 +19,11 @@ module Feed
   end
 
   def self.retrieve_activities
-    timeline = Octopussy::Client.new.public_timeline('gnab')
+    begin
+      timeline = Octopussy::Client.new.public_timeline('gnab')
+    rescue Twitter::BadRequest
+      return []
+    end
 
     timeline.select{ |entry| entry.type == 'PushEvent' }.collect do |entry|
       { 
