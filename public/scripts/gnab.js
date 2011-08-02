@@ -1,8 +1,10 @@
 var gnab = (function () {
+  var projects = ko.observableArray();
 
-  function Tab(id, entryTagCreator) {
+  function Tab(id, contentFetcher) {
     this.id = id;
-    this.createEntryTag = entryTagCreator;
+    this.fetchContent = contentFetcher;
+    this.hide();
   }
 
   Tab.prototype.show = function () {
@@ -14,42 +16,29 @@ var gnab = (function () {
     else {
       $('#' + this.id + ' .content').fadeIn();
     }
-  }
+  };
 
   Tab.prototype.hide = function () {
     $('#' + this.id + 'Tab').removeClass('active');
     $('#' + this.id).hide();
     $('#' + this.id + ' .content').hide();
-  }
+  };
 
   Tab.prototype.load = function () {
-    var self = this, 
-        content = $('#' + this.id + ' .content'), 
-        createTagTag = createTagTagCreator();
+    var self = this
+    , content = $('#' + this.id + ' .content')
+    , createTagTag = createTagTagCreator();
 
     content.hide();
     $('#loader').show();
 
     this.loaded = true;
 
-    $.getJSON('/' + this.id + '.js', function(entries) {
-      content.empty();
-
-      $(entries).each(function(i, entry) {
-        var entryTag = self.createEntryTag(entry),
-            tagTag = createTagTag(entry);
-
-        if (tagTag) {
-          content.append(tagTag);
-        }
-
-        content.append(entryTag);
-      });
-
+    this.fetchContent(function () {
       $('#loader').hide();
       content.fadeIn();
     });
-  }
+  };
 
   function createTagTagCreator() {
     var lastDayOffset = -1;
@@ -171,33 +160,14 @@ var gnab = (function () {
       .append(metaTag);
   }
 
-  function createCodeEntryTag(entry) {
-    var entryTag = $('<div class="entry" />');
-
-    var languageTag = $('<span class="meta right" />')
-      .text(entry.language);
-
-    var watchersTag = $('<span class="meta watchers right" />')
-      .text(entry.watchers);
-
-    var forksTag = $('<span class="meta forks right" />')
-      .text(entry.forks);
-
-    var nameTag = $('<div class="title" />')
-      .append($('<a href="' + entry.url + '"/>').text(entry.name))
-
-    var textTag = $('<div class="text" />').html(' ' + entry.description);
-
-    var metaTag = $('<div class="meta" />')
-      .text('Last updated ' + formatDatetime(entry.pushed_at));
-
-    return entryTag
-      .append(forksTag)
-      .append(watchersTag)
-      .append(languageTag)
-      .append(nameTag)
-      .append(textTag)
-      .append(metaTag);
+  function fetchProjects(callback) {
+    $.getJSON('/code.js', function(entries) {
+      $(entries).each(function (i, entry) {
+        entry.meta = 'Last updated ' + formatDatetime(entry.pushed_at);
+        projects.push(entry); 
+      });
+      callback();
+    });
   }
 
   function formatDatetime(datetime) {
@@ -220,22 +190,26 @@ var gnab = (function () {
     return date.strftime('%H:%M %b %e') + ending;
   }
 
-  var currentTab, tabs = {
-    feed: new Tab('feed', createFeedEntryTag), 
-    code: new Tab('code', createCodeEntryTag), 
-    about: new Tab('about')
+  var currentTab
+  , tabs = {
+      feed: new Tab('feed', createFeedEntryTag)
+    , code: new Tab('code', fetchProjects)
+    , about: new Tab('about')
+  }
+
+  function gotoTab(tab) {
+    if (currentTab) {
+      currentTab.hide();
+    }
+    currentTab = tabs[tab];
+    currentTab.show();
   }
 
   tabs['about'].loaded = true;
   
   return {
-    gotoTab: function(tab) {
-      if (currentTab) {
-        currentTab.hide();
-      }
-      currentTab = tabs[tab];
-      currentTab.show();
-    }
+    gotoTab: gotoTab
+  , projects: projects
   };
 
 })();
