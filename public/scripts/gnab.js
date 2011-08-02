@@ -1,44 +1,6 @@
 var gnab = (function () {
-  var projects = ko.observableArray();
-
-  function Tab(id, contentFetcher) {
-    this.id = id;
-    this.fetchContent = contentFetcher;
-    this.hide();
-  }
-
-  Tab.prototype.show = function () {
-    $('#' + this.id + 'Tab').addClass('active');
-    $('#' + this.id).show();
-    if (!this.loaded) {
-      this.load();
-    }
-    else {
-      $('#' + this.id + ' .content').fadeIn();
-    }
-  };
-
-  Tab.prototype.hide = function () {
-    $('#' + this.id + 'Tab').removeClass('active');
-    $('#' + this.id).hide();
-    $('#' + this.id + ' .content').hide();
-  };
-
-  Tab.prototype.load = function () {
-    var self = this
-    , content = $('#' + this.id + ' .content')
-    , createTagTag = createTagTagCreator();
-
-    content.hide();
-    $('#loader').show();
-
-    this.loaded = true;
-
-    this.fetchContent(function () {
-      $('#loader').hide();
-      content.fadeIn();
-    });
-  };
+  var activities = ko.observableArray()
+    , projects = ko.observableArray();
 
   function createTagTagCreator() {
     var lastDayOffset = -1;
@@ -94,7 +56,16 @@ var gnab = (function () {
     }
   }
 
-  function createFeedEntryTag(entry) {
+  function fetchActivities(callback) {
+    $.getJSON('/feed.js', function(entries) {
+      $(entries).each(function (i, entry) {
+        activities.push(entry); 
+      });
+      callback();
+    });
+
+    return;
+
     var entryTag = $('<div class="entry" />');
     var metaTag = $('<div class="meta" />');
     var textTag = $('<div class="text" />');
@@ -191,11 +162,11 @@ var gnab = (function () {
   }
 
   var currentTab
-  , tabs = {
-      feed: new Tab('feed', createFeedEntryTag)
-    , code: new Tab('code', fetchProjects)
-    , about: new Tab('about')
-  }
+    , tabs = {
+        feed: new Tab('feed', fetchActivities)
+      , code: new Tab('code', fetchProjects)
+      , about: new Tab('about')
+      };
 
   function gotoTab(tab) {
     if (currentTab) {
@@ -205,10 +176,9 @@ var gnab = (function () {
     currentTab.show();
   }
 
-  tabs['about'].loaded = true;
-  
   return {
     gotoTab: gotoTab
+  , activities: activities
   , projects: projects
   };
 

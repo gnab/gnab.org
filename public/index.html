@@ -24,7 +24,10 @@
         The feed reflects what I've been up to lately, represented by my tweets,
         coding activities and interesting blog post discoveries, altogether in 
         chronological order.
-        <div class="content"></div>
+        <script id="activityTemplate" type="text/html">
+          activity<br />
+        </script>
+        <div class="content" data-bind="template:{name:'activityTemplate',foreach:activities}"></div>
       </div>
       <div id="code">
         The list contains all of my code repositories, including the
@@ -78,28 +81,27 @@
     <script type="text/javascript" src="scripts/knockout-1.2.1.js"></script>
     <script type="text/javascript" src="scripts/sammy-0.6.2.min.js"></script>
     <script type="text/javascript" src="scripts/strftime-min.js"></script>
+    <script type="text/javascript" src="scripts/tab.js"></script>
     <script type="text/javascript" src="scripts/gnab.js"></script>
     <script type="text/javascript">
-      $(document).ready(function() {
-        var app = $.sammy(function () {
-          this.get('', function () {
-            this.redirect('#/feed');
-          });
-          this.get('#/feed', function () {
-            gnab.gotoTab('feed');
-          });
-          this.get('#/code', function () {
-            gnab.gotoTab('code');
-          });
-          this.get('#/about', function () {
-            gnab.gotoTab('about');
-          });
+      ko.applyBindings(gnab);
+
+      var app = $.sammy(function () {
+        this.get('', function () {
+          this.redirect('#/feed');
         });
-
-        ko.applyBindings(gnab);
-
-        app.run();
+        this.get('#/feed', function () {
+          gnab.gotoTab('feed');
+        });
+        this.get('#/code', function () {
+          gnab.gotoTab('code');
+        });
+        this.get('#/about', function () {
+          gnab.gotoTab('about');
+        });
       });
+
+      app.run();
     </script>
   </body>
 </html>
