@@ -1,5 +1,5 @@
-var gnab = (function () {
-  var activities = ko.observableArray()
+!function (context) {
+  var feedItems = ko.observableArray()
     , projects = ko.observableArray();
 
   function createTagTagCreator() {
@@ -59,82 +59,17 @@ var gnab = (function () {
   function fetchActivities(callback) {
     $.getJSON('/feed.js', function(entries) {
       $(entries).each(function (i, entry) {
-        activities.push(entry); 
+        entry.time = formatDatetime(entry.created_at);
+        feedItems.push(entry); 
       });
       callback();
     });
-
-    return;
-
-    var entryTag = $('<div class="entry" />');
-    var metaTag = $('<div class="meta" />');
-    var textTag = $('<div class="text" />');
-
-    if (entry.kind === 'twitter') {
-      textTag.html(' ' + entry.text);
-      var timeTag = $('<a href="http://twitter.com/' + entry.user + 
-        '/status/' + entry.id + '" />').text(formatDatetime(entry.created_at));
-      var sourceTag = $('<span />').html(entry.source);
-      metaTag.addClass('tweet');
-      metaTag.html('&nbsp;via&nbsp;')
-        .prepend(timeTag)
-        .append(sourceTag);
-
-      if (entry.forwarded) {
-        var forwardedTag = $('<span class="forwarded" />');
-        var userTag = $('<a class="user" href="http://twitter.com/' + 
-          entry.user + '"/>').text(entry.user);
-
-        textTag
-          .prepend(userTag)
-          .prepend(forwardedTag);
-      }
-    } else if (entry.kind === 'github') {
-      entry.commits.forEach(function (commit) {
-        var shaTag = $('<a href="' + entry.repository.url + '/commit/' + 
-          commit.sha + '" />').text(commit.sha.substring(0,7));
-        var commitTag = $('<div class="commit" />')
-          .text(' ' + commit.message)
-          .prepend(shaTag);
-        textTag.append(commitTag);
-      });
-      var timeTag = $('<span />').text(formatDatetime(entry.created_at));
-      var repoTag = $('<a href="' + entry.repository.url +'" />')
-        .text(entry.repository.owner + '/' + entry.repository.name);
-      metaTag.addClass('push');
-      metaTag.html('&nbsp;to&nbsp;')
-        .prepend(timeTag)
-        .append(repoTag);
-    } else if (entry.kind === 'reader') {
-      var titleTag = $('<div class="title" />')
-        .append($('<a href="' + entry.url + '"/>').text(entry.title));
-      if (entry.forwarded) {
-        var forwardedTag = $('<span class="forwarded" />');
-
-        titleTag
-          .prepend(forwardedTag);
-      }
-      var timeTag = $('<span />').text(formatDatetime(entry.created_at));
-      textTag.html(entry.text);
-      var sourceTag = $('<a href="' + entry.source.url +'" />')
-        .text(entry.source.title);
-      metaTag.addClass('post');
-      metaTag.html('&nbsp;from&nbsp;')
-        .prepend(timeTag)
-        .append(sourceTag);
-      entryTag
-        .append(titleTag);
-    }
-
-    return entryTag
-      .append(textTag)
-      .append(metaTag);
   }
 
   function fetchProjects(callback) {
     $.getJSON('/code.js', function(entries) {
       $(entries).each(function (i, entry) {
-        entry.meta = 'Last updated ' + formatDatetime(entry.pushed_at);
+        entry.time = 'Last updated ' + formatDatetime(entry.pushed_at);
         projects.push(entry); 
       });
       callback();
@@ -176,10 +111,15 @@ var gnab = (function () {
     currentTab.show();
   }
 
-  return {
+  function feedItemTemplate(entry) {
+    return entry.kind + 'Template';
+  }
+
+  context.gnab = {
     gotoTab: gotoTab
-  , activities: activities
+  , feedItemTemplate: feedItemTemplate
+  , feedItems: feedItems
   , projects: projects
   };
 
-})();
+}(this);
