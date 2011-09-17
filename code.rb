@@ -16,6 +16,7 @@ module Code
     repos = JSON.parse(data)['repositories'].collect do |entry|
       FIELDS.inject({}) do |repo, field|
         repo[field] = entry[field.to_s]
+        repo[:kind] = :project
         repo
       end
     end

@@ -40,21 +40,25 @@ a:hover {
 #header #title .n {
   font-size: 6em;
   position: relative;
+  left: -3px;
   top: -0.09em;
 }
 #header #title .a {
   font-size: 5em;
   position: relative;
+  left: -6px;
   top: -0.21em;
 }
 #header #title .b {
   font-size: 4.5em;
   position: relative;
+  left: -9px;
   top: -0.3em;
 }
 #header #title .org {
   font-size: 2em;
   position: relative;
+  left: -13px;
   top: -0.7em;
 }
 #header ul {

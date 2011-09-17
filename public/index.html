@@ -9,7 +9,11 @@
     <div id="header">
       <div class="center">
         <div id="title">
-          <span class="g">g</span><span class="n">n</span><span class="a">a</span><span class="b">b</span><span class="org">.org</span>
+          <span class="g">g</span>
+          <span class="n">n</span>
+          <span class="a">a</span>
+          <span class="b">b</span>
+          <span class="org">.org</span>
         </div>
         <ul>
           <li><a id="feedTab" href="#/feed">FEED</a></li>
@@ -24,72 +28,12 @@
         The feed reflects what I've been up to lately, represented by my tweets,
         coding activities and interesting blog post discoveries, altogether in 
         chronological order.
-        <script id="twitterTemplate" type="text/html">
-          <div class="entry">
-            <div class="text">
-              {{if forwarded}}
-              <a class="user" data-bind="text:user,attr:{href:'http://twitter.com/' + user}"></a>
-              <span class="forwarded"></span>
-              {{/if}}
-              {{html text }}
-            </div>
-            <div class="meta tweet">
-              <a data-bind="text:time,attr:{href:'http://twitter.com/' + user + '/status/' + id}"></a>
-              via
-              <span data-bind="html:source"></span>
-            </div>
-          </div>
-        </script>
-        <script id="githubTemplate" type="text/html">
-          <div class="entry">
-            <div class="text" data-bind="template:{name:'commitTemplate',foreach:commits,templateOptions:{repository:repository} }">
-            </div>
-            <div class="meta push">
-              <span data-bind="text:time"></span>
-              to
-              <a data-bind="text:repository.owner + '/' + repository.name,attr:{href:repository.url}"
-            </div>
-          </div>
-        </script>
-        <script id="commitTemplate" type="text/html">
-          <div class="commit">
-            <a data-bind="text:sha.substring(0,7),attr:{href:$item.repository.url + '/commit/' + sha}"></a>
-            ${ message }
-          </div>
-        </script>
-        <script id="readerTemplate" type="text/html">
-          <div class="entry">
-            <div class="title">
-              {{if forwarded}}
-              <span class="forwarded"></span>
-              {{/if}}
-              <a data-bind="text:title,attr:{href:url}"></a>
-            </div>
-            <div class="text" data-bind="html:text"></div>
-            <div class="meta post">
-              <span data-bind="text:time"></span>
-              from
-              <a data-bind="text:source.title,attr:{href:source.url}"></a>
-            </div>
-          </div>
-        </script>
-        <div class="content" data-bind="template:{name:feedItemTemplate,foreach:feedItems}"></div>
+        <div class="content" data-bind="template:{name:'itemTemplate',foreach:feedItems}"></div>
       </div>
       <div id="code">
         The list contains all of my code repositories, including the
         repository for this website, in order of most recent update.
-        <script id="projectTemplate" type="text/html">
-          <div class="entry">
-            <span class="meta forks right" data-bind="text:forks"></span>
-            <span class="meta right" data-bind="text:language"></span>
-            <div class="title">
-              <a data-bind="text:name,attr:{href:url}"></a>
-            </div>
-            <div class="text" data-bind="html:description"></div>
-            <div class="meta" data-bind="text:time"></div>
-          </div>
-        </script>
-        <div class="content" data-bind="template:{name:'projectTemplate',foreach:projects}"></div>
+        <div class="content" data-bind="template:{name:'itemTemplate',foreach:projects}"></div>
       </div>
       <div id="about">
         This website is my presence on the web, and as such it unifies just
@@ -128,6 +72,62 @@
     <script type="text/javascript" src="scripts/strftime-min.js"></script>
     <script type="text/javascript" src="scripts/tab.js"></script>
     <script type="text/javascript" src="scripts/gnab.js"></script>
+    <script id="itemTemplate" type="text/html">
+      <div data-bind="text:tag.text,attr:{class:tag.class}"></div>
+      <div class="entry" data-bind="template:template"></div>
+    </script>
+    <script id="twitterTemplate" type="text/html">
+      <div class="text">
+        {{if forwarded}}
+        <a class="user" data-bind="text:user,attr:{href:'http://twitter.com/' + user}"></a>
+        <span class="forwarded"></span>
+        {{/if}}
+        {{html text }}
+      </div>
+      <div class="meta tweet">
+        <a data-bind="text:time,attr:{href:'http://twitter.com/' + user + '/status/' + id}"></a>
+        via
+        <span data-bind="html:source"></span>
+      </div>
+    </script>
+    <script id="githubTemplate" type="text/html">
+      <div class="text" data-bind="template:{name:'commitTemplate',foreach:commits,templateOptions:{repository:repository} }">
+      </div>
+      <div class="meta push">
+        <span data-bind="text:time"></span>
+        to
+        <a data-bind="text:repository.owner + '/' + repository.name,attr:{href:repository.url}"
+      </div>
+    </script>
+    <script id="commitTemplate" type="text/html">
+      <div class="commit">
+        <a data-bind="text:sha.substring(0,7),attr:{href:$item.repository.url + '/commit/' + sha}"></a>
+        ${ message }
+      </div>
+    </script>
+    <script id="readerTemplate" type="text/html">
+      <div class="title">
+        {{if forwarded}}
+        <span class="forwarded"></span>
+        {{/if}}
+        <a data-bind="text:title,attr:{href:url}"></a>
+      </div>
+      <div class="text" data-bind="html:text"></div>
+      <div class="meta post">
+        <span data-bind="text:time"></span>
+        from
+        <a data-bind="text:source.title,attr:{href:source.url}"></a>
+      </div>
+    </script>
+    <script id="projectTemplate" type="text/html">
+      <span class="meta forks right" data-bind="text:forks"></span>
+      <span class="meta right" data-bind="text:language"></span>
+      <div class="title">
+        <a data-bind="text:name,attr:{href:url}"></a>
+      </div>
+      <div class="text" data-bind="html:description"></div>
+      <div class="meta" data-bind="text:time"></div>
+    </script>
     <script type="text/javascript">
       ko.applyBindings(this.gnab);
 

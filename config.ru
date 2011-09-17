@@ -8,11 +8,11 @@ get '/' do
   File.new('public/index.html').readlines
 end
 
-get '/feed.js' do
+get '/feed.json' do
   Feed.retrieve
 end
 
-get '/code.js' do
+get '/code.json' do
   Code.retrieve
 end
 
