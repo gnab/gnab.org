@@ -126,7 +126,7 @@
         <a data-bind="text:name,attr:{href:url}"></a>
       </div>
       <div class="text" data-bind="html:description"></div>
-      <div class="meta" data-bind="text:time"></div>
+      <div class="meta" data-bind="text:'Last updated ' + time"></div>
     </script>
     <script type="text/javascript">
       ko.applyBindings(this.gnab);

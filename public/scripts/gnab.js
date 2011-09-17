@@ -25,7 +25,7 @@
           previousTag = entry.tag;
         }
         entry.template = entry.kind + 'Template';
-        entry.time = formatDatetime(entry.created_at);
+        entry.time = formatDatetime(entry.pushed_at || entry.created_at);
         list.push(entry); 
       });
       callback();
