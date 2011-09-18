@@ -43,9 +43,11 @@
   }
 
   function entryAgeInDays(entry) {
-    var entryDateStr = entry.pushed_at || entry.created_at;
+    var entryDateStr = entry.pushed_at || entry.created_at
+      , now = parseInt(new Date().strftime('%Y%m%d'), 10)
+      , then = parseInt(new Date(entryDateStr).strftime('%Y%m%d'), 10);
 
-    return Math.floor((Date.now() - new Date(entryDateStr)) / msInADay);
+    return now - then;
   }
 
   function nameOfDay(age) {
