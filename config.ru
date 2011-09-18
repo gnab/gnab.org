@@ -16,4 +16,8 @@ get '/code.json' do
   Code.retrieve
 end
 
+get '/ping' do
+  "Ping received!"
+end
+
 run Sinatra::Application
