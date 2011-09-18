@@ -4,6 +4,7 @@ GEM
     addressable (2.2.4)
     crack (0.1.8)
     daemons (1.1.4)
+    dalli (1.1.2)
     eventmachine (0.12.10)
     faraday (0.5.6)
       addressable (~> 2.2.4)
@@ -52,6 +53,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
   json
   octopussy
   shotgun
