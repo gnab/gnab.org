@@ -1,23 +1,5 @@
-require 'sinatra'
-require './feed'
-require './code'
+$LOAD_PATH.unshift('./lib')
 
-mime_type :less, 'text/css'
+require 'gnab'
 
-get '/' do
-  File.new('public/index.html').readlines
-end
-
-get '/feed.json' do
-  Feed.retrieve
-end
-
-get '/code.json' do
-  Code.retrieve
-end
-
-get '/ping' do
-  "Ping received!"
-end
-
-run Sinatra::Application
+run Gnab::Application

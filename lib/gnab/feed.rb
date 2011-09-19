@@ -1,10 +1,10 @@
 require 'json'
 require 'twitter'
 require 'octopussy'
-require './common'
+require 'gnab/common'
 
-module Feed
-  extend Common
+module Gnab::Feed
+  extend Gnab::Common
 
   ITEMS_URL = 'http://www.google.no/reader/public/javascript/user/16092426485513345180/state/com.google/%s?n=20'
 

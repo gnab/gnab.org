@@ -1,10 +1,10 @@
 require 'json'
 require 'uri'
 require 'net/http'
-require './common'
+require 'gnab/common'
 
-module Code
-  extend Common
+module Gnab::Code
+  extend Gnab::Common
 
   URL = 'http://github.com/api/v2/json/repos/search/username:gnab'
   FIELDS = [:name, :description, :url, :pushed_at, :language, :url, :watchers, 
