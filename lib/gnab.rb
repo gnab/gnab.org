@@ -3,7 +3,6 @@ require 'sinatra'
 module Gnab
   autoload :Feed,  'gnab/feed'
   autoload :Code,  'gnab/code'
-  autoload :Cache, 'gnab/cache'
 
   class Application < Sinatra::Base
     mime_type :less, 'text/css'
@@ -18,11 +17,6 @@ module Gnab
 
     get '/code.json' do
       Code.retrieve
-    end
-
-    get '/ping' do
-      Cache.refresh!
-      Cache.stats
     end
   end
 end
