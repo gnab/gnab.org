@@ -7,6 +7,8 @@ module Gnab
   class Application < Sinatra::Base
     mime_type :less, 'text/css'
 
+    set :root, File.join(File.dirname(__FILE__), '..')
+
     get '/' do
       File.new('public/index.html').readlines
     end
