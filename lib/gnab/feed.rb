@@ -73,7 +73,11 @@ module Gnab::Feed
   end
 
   def self.retrieve_tweets
-    timeline = Twitter.user_timeline('gnab', :include_rts => true)
+    begin
+      timeline = Twitter.user_timeline('gnab', :include_rts => true)
+    rescue
+      return []
+    end
 
     timeline.collect do |entry|
       forwarded = entry.has_key?('retweeted_status')
