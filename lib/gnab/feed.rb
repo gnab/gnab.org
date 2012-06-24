@@ -1,6 +1,7 @@
 require 'json'
 require 'twitter'
-require 'octopussy'
+require 'net/http'
+require 'net/https'
 require 'gnab/common'
 
 module Gnab::Feed
@@ -19,26 +20,25 @@ module Gnab::Feed
   end
 
   def self.retrieve_activities
-    begin
-      timeline = Octopussy::Client.new.public_timeline('gnab')
-    rescue Twitter::BadRequest
-      return []
-    end
+    http = Net::HTTP.new('api.github.com', 443)
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl = true
+    data = http.request(Net::HTTP::Get.new('/users/gnab/events')).body
 
-    timeline.select{ |entry| entry.type == 'PushEvent' }.collect do |entry|
-      { 
+    JSON.parse(data).select { |entry| entry['type'] == 'PushEvent' }.collect do |entry|
+      {
         :type => 'push',
-        :created_at => DateTime.parse(entry.created_at).to_time,
+        :created_at => DateTime.parse(entry['created_at']).to_time,
         :repository => {
-          :name => entry.repository.name,
-          :description => entry.repository.description,
-          :url => entry.repository.url,
-          :owner => entry.repository.owner
+          :name => entry['repo']['name'],
+          :description => entry['repo']['description'],
+          :url => entry['repo']['url'],
+          :owner => entry['repo']['owner']
         },
-        :commits => entry.payload.shas.collect { |sha| 
+        :commits => entry['payload']['commits'].collect { |commit|
           {
-            :message => sha[2],
-            :sha => sha[0]
+            :message => commit['message'],
+            :sha => commit['sha']
           }
         }.reverse,
         :kind => 'github'
@@ -82,7 +82,7 @@ module Gnab::Feed
     timeline.collect do |entry|
       forwarded = entry.has_key?('retweeted_status')
       entry = entry['retweeted_status'] if forwarded
-      created_at = DateTime.parse(entry['created_at']) + 
+      created_at = DateTime.parse(entry['created_at']) +
           entry['user']['utc_offset'].to_f / 3600 / 24
       {
         :forwarded => forwarded,
