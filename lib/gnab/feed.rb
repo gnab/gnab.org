@@ -80,17 +80,15 @@ module Gnab::Feed
     end
 
     timeline.collect do |entry|
-      forwarded = entry.has_key?('retweeted_status')
-      entry = entry['retweeted_status'] if forwarded
-      created_at = DateTime.parse(entry['created_at']) +
-          entry['user']['utc_offset'].to_f / 3600 / 24
+      entry = entry.retweeted_status if entry.retweeted?
+      created_at = entry.created_at + entry.user.utc_offset.to_f / 3600 / 24
       {
-        :forwarded => forwarded,
-        :source => entry['source'],
-        :text => format_tweet_text(entry['text']),
+        :forwarded => entry.retweeted?,
+        :source => entry.source,
+        :text => format_tweet_text(entry.text),
         :created_at => created_at.to_time,
-        :user => entry['user']['screen_name'],
-        :id => entry['id_str'],
+        :user => entry.user.screen_name,
+        :id => entry.id,
         :kind => 'twitter'
       }
     end
