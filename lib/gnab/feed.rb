@@ -32,8 +32,7 @@ module Gnab::Feed
         :repository => {
           :name => entry['repo']['name'],
           :description => entry['repo']['description'],
-          :url => entry['repo']['url'],
-          :owner => entry['repo']['owner']
+          :url => entry['repo']['url']
         },
         :commits => entry['payload']['commits'].collect { |commit|
           {
