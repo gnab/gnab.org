@@ -66,8 +66,7 @@
       <div id="loader"></div>
     </div>
     <script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="scripts/jquery.tmpl.js"></script>
-    <script type="text/javascript" src="scripts/knockout-1.2.1.js"></script>
+    <script type="text/javascript" src="scripts/knockout-2.2.0.min.js"></script>
     <script type="text/javascript" src="scripts/sammy-0.6.2.min.js"></script>
     <script type="text/javascript" src="scripts/strftime-min.js"></script>
     <script type="text/javascript" src="scripts/tab.js"></script>
@@ -78,20 +77,24 @@
     </script>
     <script id="twitterTemplate" type="text/html">
       <div class="text">
-        {{if forwarded}}
+        <!-- ko if: forwarded -->
         <a class="user" data-bind="text:user,attr:{href:'http://twitter.com/' + user}"></a>
         <span class="forwarded"></span>
-        {{/if}}
-        {{html text }}
+        <!-- /ko -->
+        <span data-bind="html: text"></span>
       </div>
       <div class="meta tweet">
         <a data-bind="text:time,attr:{href:'http://twitter.com/' + user + '/status/' + id}"></a>
         via
-        <span data-bind="html:source"></span>
+        <span data-bind="html: source"></span>
       </div>
     </script>
     <script id="githubTemplate" type="text/html">
-      <div class="text" data-bind="template:{name:'commitTemplate',foreach:commits,templateOptions:{repository:repository} }">
+      <div class="text" data-bind="foreach: commits">
+        <div class="commit">
+          <a data-bind="text:sha.substring(0,7),attr:{href:$parent.repository.url + '/commit/' + sha}"></a>
+          <span data-bind="text: message"></span>
+        </div>
       </div>
       <div class="meta push">
         <span data-bind="text:time"></span>
@@ -99,17 +102,11 @@
         <a data-bind="text:repository.name,attr:{href:repository.url}"
       </div>
     </script>
-    <script id="commitTemplate" type="text/html">
-      <div class="commit">
-        <a data-bind="text:sha.substring(0,7),attr:{href:$item.repository.url + '/commit/' + sha}"></a>
-        ${ message }
-      </div>
-    </script>
     <script id="readerTemplate" type="text/html">
       <div class="title">
-        {{if forwarded}}
+        <!-- ko if: forwarded -->
         <span class="forwarded"></span>
-        {{/if}}
+        <!-- /ko -->
         <a data-bind="text:title,attr:{href:url}"></a>
       </div>
       <div class="text" data-bind="html:text"></div>
